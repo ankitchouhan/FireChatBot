@@ -49,9 +49,8 @@
 
         <Spinner
             android:id="@+id/s_country"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/d_spinner_width"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/d_country_spinner_marginTop"
             android:layout_alignParentEnd="true"/>
 
         <View

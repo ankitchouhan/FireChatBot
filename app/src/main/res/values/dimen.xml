@@ -13,6 +13,7 @@
     <dimen name="d_country_spinner_marginTop">7dp</dimen>
     <dimen name="d_verify_button_marginTop">30dp</dimen>
     <dimen name="s_terms_of_services">13sp</dimen>
+    <dimen name="d_spinner_width">150dp</dimen>
 
 
 
