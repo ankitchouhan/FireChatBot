@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="d_sign_up_padding">30dp</dimen>
+    <dimen name="d_welcome_marginTop">20dp</dimen>
+    <dimen name="s_welcome_size">30sp</dimen>
+    <dimen name="s_welcome_message_size">17sp</dimen>
+    <dimen name="s_verify_size">17sp</dimen>
+    <dimen name="d_welcome_message_paddingTop">40dp</dimen>
+    <dimen name="d_welcome_message_paddingBottom">50dp</dimen>
+    <dimen name="d_view">1dp</dimen>
+    <dimen name="d_ll_country_padding">8dp</dimen>
+    <dimen name="d_country_spinner_marginTop">7dp</dimen>
+    <dimen name="d_verify_button_marginTop">30dp</dimen>
+    <dimen name="s_terms_of_services">13sp</dimen>
+
+
+
+</resources>

@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">FireChatBot</string>
+
+    <string name="welcome">Welcome To FireChat!</string>
+    
+    <string name="welcome_message">Enter your phone number To create a \n FIRECHAT account, please verify\n your phone number</string>
+    
+    <string name="country">Country</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="required">Required</string>
+    <string name="verify_phone_number_button">Verify Phone Number</string>
+    <string name="terms_of_services">By signing up, you agree to the FireChats Terms of services and Privacy Policy.</string>
+    <string name="country_code_us">+1(US)</string>
+
+</resources>
