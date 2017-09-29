@@ -2,9 +2,10 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#6320FC</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
     <color name="purple">#6320FC</color>
     <color name="dark_gray">#696969</color>
+    <color name="facebook_button">#3A5A97</color>
 </resources>

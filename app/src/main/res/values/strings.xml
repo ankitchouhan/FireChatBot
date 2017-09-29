@@ -2,13 +2,14 @@
     <string name="app_name">FireChatBot</string>
 
     <string name="welcome">Welcome To FireChat!</string>
-    
+
     <string name="welcome_message"><b>Enter your phone number</b> To create a \n FIRECHAT account, please verify\n your phone number</string>
-    
+
     <string name="country">Country</string>
     <string name="phone_number">Phone Number</string>
     <string name="required">Required</string>
     <string name="verify_phone_number_button">Verify Phone Number</string>
+    <string name="sig_up_with_facebook">Sign up with Facebook</string>
     <string name="terms_of_services">By signing up, you agree to the FireChats Terms of services and Privacy Policy.</string>
 
     <string-array name="country_code">
@@ -18,5 +19,21 @@
         <item>+92(Pakistan)</item>
 
     </string-array>
+
+    <string name="fail_authenticate">Failed to Authenticate</string>
+    <string name="enter_valid_number">Please enter valid number</string>
+    <string name="create_your_profile">Now Let"'"s create your profile</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="button_done">Done</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="enter_first_name">Enter first name</string>
+    <string name="enter_last_name">Enter last name</string>
+    <string name="sign_out">Sign out</string>
+    <string name="user_created">User successfully created</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

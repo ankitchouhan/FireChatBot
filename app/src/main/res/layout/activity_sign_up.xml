@@ -1,110 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_sign_up"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/d_sign_up_padding">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_welcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/d_welcome_marginTop"
-        android:text="@string/welcome"
-        android:textColor="@color/black"
-        android:textSize="@dimen/s_welcome_size" />
-
-    <TextView
-        android:id="@+id/tv_welcome_message"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:maxLines="3"
-        android:paddingBottom="@dimen/d_welcome_message_paddingBottom"
-        android:paddingTop="@dimen/d_welcome_message_paddingTop"
-        android:text="@string/welcome_message"
-        android:textColor="@color/black"
-        android:textSize="@dimen/s_welcome_message_size" />
+        android:orientation="vertical"
+        android:padding="@dimen/d_sign_up_padding">
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/d_verify_button_marginTop">
+        <TextView
+            android:id="@+id/tv_welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/d_welcome_marginTop"
+            android:text="@string/welcome"
+            android:textColor="@color/black"
+            android:textSize="@dimen/s_welcome_size" />
+
+        <TextView
+            android:id="@+id/tv_welcome_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLines="3"
+            android:paddingBottom="@dimen/d_welcome_message_paddingBottom"
+            android:paddingTop="@dimen/d_welcome_message_paddingTop"
+            android:text="@string/welcome_message"
+            android:textColor="@color/black"
+            android:textSize="@dimen/s_welcome_message_size" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d_verify_button_marginTop"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d_view"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                android:id="@+id/tv_country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/d_ll_country_padding"
+                android:text="@string/country"
+                android:textColor="@color/black"
+                android:textSize="@dimen/s_verify_size" />
+
+            <Spinner
+                android:id="@+id/s_country"
+                android:layout_width="@dimen/d_spinner_width"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true" />
+
+            <View
+                android:id="@+id/v_middle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d_view"
+                android:layout_below="@id/tv_country"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                android:id="@+id/tv_phone_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/v_middle"
+                android:padding="@dimen/d_ll_country_padding"
+                android:text="@string/phone_number"
+                android:textColor="@color/black"
+                android:textSize="@dimen/s_verify_size" />
+
+            <EditText
+                android:id="@+id/et_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/tv_phone_number"
+                android:layout_alignParentEnd="true"
+                android:background="@null"
+                android:gravity="end"
+                android:hint="@string/required"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:padding="@dimen/d_ll_country_padding" />
+
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/d_view"
             android:background="@color/dark_gray" />
+
+        <Button
+            android:id="@+id/b_verify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d_verify_button_marginTop"
+            android:background="@drawable/shape_button_round"
+            android:text="@string/verify_phone_number_button"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+
         <TextView
-            android:id="@+id/tv_country"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_terms"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/d_ll_country_padding"
-            android:text="@string/country"
-            android:textColor="@color/black"
-            android:textSize="@dimen/s_verify_size" />
+            android:text="@string/terms_of_services"
+            android:textSize="@dimen/s_terms_of_services" />
 
-        <Spinner
-            android:id="@+id/s_country"
-            android:layout_width="@dimen/d_spinner_width"
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/b_sign_up_facebook"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"/>
-
+            android:layout_margin="@dimen/d_sign_up_padding"
+            android:background="@drawable/shape_button_facebook"
+            android:text="@string/sig_up_with_facebook"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"/>
         <View
-            android:id="@+id/v_middle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/d_view"
             android:background="@color/dark_gray"
-            android:layout_below="@id/tv_country"/>
+            android:layout_above="@id/b_sign_up_facebook"/>
 
-        <TextView
-            android:id="@+id/tv_phone_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/v_middle"
-            android:padding="@dimen/d_ll_country_padding"
-            android:text="@string/phone_number"
-            android:textColor="@color/black"
-            android:textSize="@dimen/s_verify_size" />
-        <EditText
-            android:id="@+id/et_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/required"
-            android:gravity="end"
-            android:background="@null"
-            android:inputType="phone"
-            android:maxLength="10"
-            android:padding="@dimen/d_ll_country_padding"
-            android:layout_alignBottom="@id/tv_phone_number"
-            android:layout_alignParentEnd="true"/>
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/d_view"
-        android:background="@color/dark_gray" />
-
-    <Button
-        android:id="@+id/b_verify"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:text="@string/verify_phone_number_button"
-        android:background="@drawable/shape_button_round"
-        android:layout_marginTop="@dimen/d_verify_button_marginTop"/>
-
-    <TextView
-        android:id="@+id/tv_terms"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/d_ll_country_padding"
-        android:text="@string/terms_of_services"
-        android:textSize="@dimen/s_terms_of_services"/>
 
 </LinearLayout>
