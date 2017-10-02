@@ -23,8 +23,7 @@
         android:layout_height="match_parent"
         android:layout_above="@id/tl_tabs"/>
 
-    <!--
-        <Button
+   <!--     <Button
             android:id="@+id/b_sign_out"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

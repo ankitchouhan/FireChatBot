@@ -18,6 +18,9 @@ android {
         }
     }
 }
+repositories {
+    mavenCentral()
+}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -36,6 +39,7 @@ dependencies {
     compile 'com.facebook.fresco:fresco:1.5.0'
     compile 'com.github.stfalcon:frescoimageviewer:0.5.0'
     compile 'com.android.support:support-v4:26.+'
+    compile 'com.facebook.android:facebook-android-sdk:4.20.0'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

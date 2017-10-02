@@ -1,8 +1,45 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.firechatbot.fragments.ChatFragment">
 
+    <include layout="@layout/include_toolbar" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/iv_chat_image_sample"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/chatsample"
+        android:layout_marginTop="@dimen/d_welcome_message_paddingTop"/>
+
+    <TextView
+        android:id="@+id/tv_add_chat_sample"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/dont_see_what_looking"
+        android:textSize="@dimen/s_verify_size"
+        android:paddingTop="@dimen/d_welcome_message_paddingTop"
+        android:paddingBottom="@dimen/d_verify_button_marginTop"/>
+    
+    <Button
+        android:id="@+id/b_add_friend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_friends"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:background="@drawable/shape_button_round"
+        android:layout_marginStart="@dimen/d_sign_up_padding"
+        android:layout_marginEnd="@dimen/d_sign_up_padding"/>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_chats"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
+</LinearLayout>

@@ -133,11 +133,11 @@
             android:textColor="@color/white"
             android:layout_alignParentBottom="true"/>
         <View
+            android:id="@+id/v_bottom_line"
             android:layout_width="match_parent"
             android:layout_height="@dimen/d_view"
             android:background="@color/dark_gray"
             android:layout_above="@id/b_sign_up_facebook"/>
-
 
     </RelativeLayout>
 

@@ -15,7 +15,12 @@
     <dimen name="s_terms_of_services">13sp</dimen>
     <dimen name="d_spinner_width">150dp</dimen>
     <dimen name="s_create_profile_size">15sp</dimen>
-    <dimen name="d_profile_image_size">120dp</dimen>
+    <dimen name="d_profile_image_size">140dp</dimen>
+
+    <dimen name="d_profile_icon_size">60dp</dimen>
+    
+    <dimen name="d_contact_profile_size">110dp</dimen>
+    <dimen name="s_contact_profile_name_size">22sp</dimen>
 
 
 

@@ -9,9 +9,9 @@ import com.firechatbot.fragments.ChatFragment;
 import com.firechatbot.fragments.ContactsFragment;
 import com.firechatbot.utils.AppConstants;
 
-public class ChatPageAdapter extends FragmentPagerAdapter{
+public class ChatPagerAdapter extends FragmentPagerAdapter{
 
-    public ChatPageAdapter(FragmentManager fm) {
+    public ChatPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 

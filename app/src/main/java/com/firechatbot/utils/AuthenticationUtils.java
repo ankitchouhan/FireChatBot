@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.firechatbot.R;
 import com.firechatbot.activities.MainActivity;
+import com.firechatbot.activities.SignUpActivity;
 import com.firechatbot.activities.UserDetailActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,16 +40,17 @@ public class AuthenticationUtils {
      * Method to signIn Anonymously.
      */
     public void signInAnonymously(final Activity activity, final View layoutLL) {
-        ((UserDetailActivity) activity).showViews();
         mAuth.signInAnonymously()
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        ((UserDetailActivity) activity).hideViews();
                         if (task.isSuccessful()) {
-                            ((UserDetailActivity) activity).startMainActivity();
+                            ((UserDetailActivity) activity).uploadUserProfile(getUser().getUid());
                         } else
+                        {
+                            ((UserDetailActivity)activity).hideViews();
                             AppUtils.snackBar(layoutLL, activity.getString(R.string.fail_authenticate));
+                        }
                     }
                 });
     }

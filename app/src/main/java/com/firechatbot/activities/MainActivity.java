@@ -7,8 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.firechatbot.R;
-import com.firechatbot.adapters.ChatPageAdapter;
+import com.firechatbot.adapters.ChatPagerAdapter;
 import com.firechatbot.utils.AuthenticationUtils;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fresco.initialize(this);
         setContentView(R.layout.activity_main);
         AuthenticationUtils.getInstance().authStateListener(this);
         initViews();
@@ -29,10 +31,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         tabLayoutTL = (TabLayout) findViewById(R.id.tl_tabs);
         ViewPager pager = (ViewPager) findViewById(R.id.vp_pages);
-        pager.setCurrentItem(1);
         tabLayoutTL.setupWithViewPager(pager);
-        ChatPageAdapter pageAdapter = new ChatPageAdapter(getSupportFragmentManager());
+        ChatPagerAdapter pageAdapter = new ChatPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pageAdapter);
+        pager.setCurrentItem(1);
         //findViewById(R.id.b_sign_out).setOnClickListener(this);
     }
 

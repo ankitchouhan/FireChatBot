@@ -1,7 +1,6 @@
 package com.firechatbot.activities;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,29 +11,40 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.firechatbot.R;
 import com.firechatbot.database.FireDatabase;
+import com.firechatbot.pojo.UserDetailBean;
 import com.firechatbot.utils.AppConstants;
 import com.firechatbot.utils.AppUtils;
 import com.firechatbot.utils.AuthenticationUtils;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+
+import org.json.JSONObject;
+
+import java.util.Arrays;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Spinner spinner;
     private LinearLayout layoutLL;
     private EditText phoneNumberEt;
+    private CallbackManager mCallbackManager;
+    private UserDetailBean mBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fbLoginManager();
         setContentView(R.layout.activity_sign_up);
         initViews();
         initSpinner();
@@ -58,6 +68,58 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         termsSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.purple)), termsTv.getText().toString().indexOf("Privacy"), termsTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         termsTv.setText(termsSpan);
         findViewById(R.id.b_verify).setOnClickListener(this);
+        findViewById(R.id.b_sign_up_facebook).setOnClickListener(this);
+    }
+
+    /**
+     * Method to setup facebook login.
+     */
+    private void fbLoginManager() {
+        mCallbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                setFacebookData(loginResult);
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    /**
+     * Method to set facebook data.
+     */
+    private void setFacebookData(LoginResult loginResult) {
+        GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        if (Profile.getCurrentProfile() != null) {
+                            mBean = new UserDetailBean();
+                            mBean.setFirstName(Profile.getCurrentProfile().getFirstName());
+                            mBean.setLastName(Profile.getCurrentProfile().getLastName());
+                            mBean.setProfileUri(Profile.getCurrentProfile().getProfilePictureUri(200, 200).toString());
+                        }
+                        // Log.i("Login", "ProfilePic  " + Profile.getCurrentProfile().getProfilePictureUri(200, 200));
+                        //Log.i("Login", "ProfilePic  " + Profile.getCurrentProfile().getProfilePictureUri(200, 200).getLastPathSegment());
+                    }
+                });
+        request.executeAsync();
     }
 
     /**
@@ -74,7 +136,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
      * Method to check User Details.
      */
     private void getUser() {
-        if (AuthenticationUtils.getInstance().getUser()!= null) {
+        if (AuthenticationUtils.getInstance().getUser() != null) {
             startActivity(new Intent(SignUpActivity.this, MainActivity.class));
             finish();
         }
@@ -84,16 +146,37 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.b_verify:
-                if (AppUtils.validateNumber(phoneNumberEt.getText().toString().trim()))
-                {
-                    startActivity(new Intent(SignUpActivity.this, UserDetailActivity.class).putExtra(AppConstants.USER_PHONE_NUMBER,phoneNumberEt.getText().toString().trim()));
-                    finish();
-                }
-                else
-                    AppUtils.snackBar(layoutLL,getString(R.string.enter_valid_number));
+                if (AppUtils.validateNumber(phoneNumberEt.getText().toString().trim())) {
+                    //checkUserInDatabase();
+                    // AuthenticationUtils.getInstance().signInAnonymously(this, layoutLL);
+                    startUserDetailActivity();
+                } else
+                    AppUtils.snackBar(layoutLL, getString(R.string.enter_valid_number));
+                break;
+            case R.id.b_sign_up_facebook:
+                LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"));
                 break;
         }
     }
 
+    /**
+     * Method to start user detail activity.
+     */
+    public void startUserDetailActivity() {
+        Intent intent = new Intent(SignUpActivity.this, UserDetailActivity.class);
+        intent.putExtra(AppConstants.INTENT_PHONE_NUMBER, phoneNumberEt.getText().toString().trim());
+        //intent.putExtra(AppConstants.USER_ID, userId);
+        if (mBean != null)
+            intent.putExtra(AppConstants.USER_DETAIL_BEAN, mBean);
+        startActivity(intent);
+        finish();
+    }
+
+    /**
+     * Method to start main activity if user exist in database.
+     */
+    private void checkUserInDatabase() {
+        FireDatabase.getInstance().getUserProfile(this, phoneNumberEt.getText().toString().trim());
+    }
 
 }

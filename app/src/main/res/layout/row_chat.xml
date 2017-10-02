@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:padding="@dimen/d_welcome_marginTop">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sdv_profile_icon"
+        android:layout_width="@dimen/d_profile_icon_size"
+        android:layout_height="@dimen/d_profile_icon_size"
+        app:roundAsCircle="true"
+        app:placeholderImage="@mipmap/ic_launcher_round"
+        fresco:scaleType="centerCrop"/>
+
+    <TextView
+        android:id="@+id/tv_chat_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_friends"
+        android:textColor="@color/black"
+        android:textSize="@dimen/s_welcome_message_size"
+        android:layout_marginStart="@dimen/d_ll_country_padding"
+        android:paddingTop="@dimen/d_country_spinner_marginTop"
+        android:maxLines="1"/>
+
+</LinearLayout>

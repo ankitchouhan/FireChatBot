@@ -3,6 +3,8 @@
 
     <string name="welcome">Welcome To FireChat!</string>
 
+    <string name="facebook_app_id">1663025317062080</string>
+
     <string name="welcome_message"><b>Enter your phone number</b> To create a \n FIRECHAT account, please verify\n your phone number</string>
 
     <string name="country">Country</string>
@@ -32,8 +34,9 @@
     <string name="sign_out">Sign out</string>
     <string name="user_created">User successfully created</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="failed_upload_image">Failed to upload image.</string>
+    <string name="dont_see_what_looking">Don"'"t see who you"'"re looking for?</string>
+    <string name="add_friends">Add Friends</string>
+    <string name="contacts">Contacts</string>
 
 </resources>

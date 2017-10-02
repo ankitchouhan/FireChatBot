@@ -2,6 +2,7 @@ package com.firechatbot.database;
 
 
 import android.app.Activity;
+import android.net.Uri;
 import android.util.Log;
 
 import com.firechatbot.activities.UserDetailActivity;
@@ -36,29 +37,34 @@ public class FireDatabase {
     /**
      * Method to set up user.
      */
-    public void writeNewUser(String firstName, String lastName, String phone) {
+    public void writeNewUser(String firstName, String lastName, String phone, String userId, Uri imageUri) {
         UserDetailBean bean = new UserDetailBean();
         bean.setFirstName(firstName);
         bean.setLastName(lastName);
         bean.setPhone(phone);
-        mReference.child(AppConstants.USER_NODE).push().setValue(bean);
+        if (imageUri!=null)
+            bean.setProfileUri(imageUri.toString());
+        mReference.child(AppConstants.USER_NODE).child(userId).setValue(bean);
     }
 
     /**
      * Method to check user account in database.
      */
     public void getUserProfile(final Activity activity, final String phone) {
-        ((UserDetailActivity) activity).showViews();
+       // ((UserDetailActivity) activity).showViews();
         mReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
+                   // Log.d("response",""+snapshot.child(AppConstants.USER_PHONE).getValue());
                     if (snapshot.child(phone).exists())
                     {
-                        ((UserDetailActivity)activity).startMainActivity();
+                       // ((UserDetailActivity)activity).startMainActivity();
                     }
-                    Log.d("response",""+snapshot.getKey());
+                    //UserDetailBean bean = snapshot.getValue(UserDetailBean.class);
+
+
                 }
             }
 
