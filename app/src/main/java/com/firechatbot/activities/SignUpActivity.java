@@ -115,8 +115,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                             mBean.setLastName(Profile.getCurrentProfile().getLastName());
                             mBean.setProfileUri(Profile.getCurrentProfile().getProfilePictureUri(200, 200).toString());
                         }
-                        // Log.i("Login", "ProfilePic  " + Profile.getCurrentProfile().getProfilePictureUri(200, 200));
-                        //Log.i("Login", "ProfilePic  " + Profile.getCurrentProfile().getProfilePictureUri(200, 200).getLastPathSegment());
                     }
                 });
         request.executeAsync();

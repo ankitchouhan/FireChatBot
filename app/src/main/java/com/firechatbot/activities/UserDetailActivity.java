@@ -35,7 +35,7 @@ public class UserDetailActivity extends AppCompatActivity implements View.OnClic
     private String mPhoneNumber;
     private SimpleDraweeView profileImageSdv;
     private String mUserId;
-    private Uri mFile;
+    private Uri mFile, mFbPic;
 
 
     @Override
@@ -66,13 +66,12 @@ public class UserDetailActivity extends AppCompatActivity implements View.OnClic
     private void getIntentData() {
         mPhoneNumber = getIntent().getStringExtra(AppConstants.INTENT_PHONE_NUMBER);
         //mUserId = getIntent().getStringExtra(AppConstants.USER_ID);
-        if ( getIntent().getParcelableExtra(AppConstants.USER_DETAIL_BEAN)!=null)
-        {
+        if (getIntent().getParcelableExtra(AppConstants.USER_DETAIL_BEAN) != null) {
             UserDetailBean mBean = getIntent().getParcelableExtra(AppConstants.USER_DETAIL_BEAN);
             firstNameEt.setText(mBean.getFirstName());
             lastNameEt.setText(mBean.getLastName());
             profileImageSdv.setImageURI(mBean.getProfileUri());
-            mFile = Uri.parse(mBean.getProfileUri());
+            mFbPic = Uri.parse(mBean.getProfileUri());
         }
     }
 
@@ -109,7 +108,6 @@ public class UserDetailActivity extends AppCompatActivity implements View.OnClic
             if (data != null) {
                 mFile = data.getData();
                 profileImageSdv.setImageURI(data.getData());
-               // Log.i("Login", "ProfilePic" + mFile.getLastPathSegment());
             }
         }
     }
@@ -139,21 +137,23 @@ public class UserDetailActivity extends AppCompatActivity implements View.OnClic
 
     /**
      * Method to upload user profile.
-     * */
-    public void uploadUserProfile(String userId)
-    {
+     */
+    public void uploadUserProfile(String userId) {
         mUserId = userId;
-        if (mFile!=null){
-            FireStorage.getInstance().uploadUserImage(mFile,mUserId,this);
+        if (mFile != null) {
+            FireStorage.getInstance().uploadUserImage(mFile, mUserId, this);
+            return;
+        } else if (mFbPic != null) {
+            uploadData(mFbPic);
+            return;
         }
-        else
-            uploadData(null);
+        uploadData(null);
     }
+
     /**
      * Method to upload user info to database.
-     * */
-    public void uploadData(Uri imageUrl)
-    {
+     */
+    public void uploadData(Uri imageUrl) {
         FireDatabase.getInstance().writeNewUser(firstNameEt.getText().toString().trim(),
                 lastNameEt.getText().toString().trim(),
                 mPhoneNumber,
