@@ -4,6 +4,7 @@
     <string name="welcome">Welcome To FireChat!</string>
 
     <string name="facebook_app_id">1663025317062080</string>
+    <string name="fb_login_protocol_scheme">fb1663025317062080</string>
 
     <string name="welcome_message"><b>Enter your phone number</b> To create a FIRECHAT account, please verify your phone number</string>
 

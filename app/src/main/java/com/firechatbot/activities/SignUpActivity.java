@@ -168,8 +168,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         //intent.putExtra(AppConstants.USER_ID, userId);
         if (mBean != null)
             intent.putExtra(AppConstants.USER_DETAIL_BEAN, mBean);
+        hideViews();
         startActivity(intent);
-        finish();
     }
 
     /**
