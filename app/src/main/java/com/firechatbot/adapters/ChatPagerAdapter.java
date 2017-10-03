@@ -4,12 +4,13 @@ package com.firechatbot.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.firechatbot.fragments.ChatFragment;
 import com.firechatbot.fragments.ContactsFragment;
 import com.firechatbot.utils.AppConstants;
 
-public class ChatPagerAdapter extends FragmentPagerAdapter{
+public class ChatPagerAdapter extends FragmentStatePagerAdapter{
 
     public ChatPagerAdapter(FragmentManager fm) {
         super(fm);

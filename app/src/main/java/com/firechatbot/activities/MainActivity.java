@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayoutTL.setupWithViewPager(pager);
         ChatPagerAdapter pageAdapter = new ChatPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pageAdapter);
+        pager.setOffscreenPageLimit(3);
         pager.setCurrentItem(1);
     }
 

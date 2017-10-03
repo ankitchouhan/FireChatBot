@@ -9,9 +9,18 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.firechatbot.R;
+import com.firechatbot.beans.ContactBean;
+
+import java.util.List;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.CustomViewHolder>{
 
+    private List<ContactBean> mList;
+
+    public ContactAdapter(List<ContactBean> mList)
+    {
+        this.mList = mList;
+    }
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_contacts,parent,false);
@@ -20,12 +29,19 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.CustomVi
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
-
+        if (mList.get(position).getName()!=null)
+            holder.nameTv.setText(mList.get(position).getName());
+        else
+            holder.nameTv.setVisibility(View.GONE);
+        if (mList.get(position).getPhone()!=null)
+            holder.lastSeenTv.setText(mList.get(position).getPhone());
+        else
+            holder.lastSeenTv.setVisibility(View.GONE);
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return mList.size();
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder{

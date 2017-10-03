@@ -1,4 +1,4 @@
-package com.firechatbot.pojo;
+package com.firechatbot.beans;
 
 
 import android.os.Parcel;

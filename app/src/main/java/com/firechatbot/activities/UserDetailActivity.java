@@ -11,7 +11,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -22,7 +21,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.firechatbot.R;
 import com.firechatbot.database.FireDatabase;
 import com.firechatbot.database.FireStorage;
-import com.firechatbot.pojo.UserDetailBean;
+import com.firechatbot.beans.UserDetailBean;
 import com.firechatbot.utils.AppConstants;
 import com.firechatbot.utils.AuthenticationUtils;
 

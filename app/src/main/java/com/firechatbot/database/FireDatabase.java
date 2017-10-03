@@ -3,11 +3,9 @@ package com.firechatbot.database;
 
 import android.app.Activity;
 import android.net.Uri;
-import android.util.Log;
 
 import com.firechatbot.activities.SignUpActivity;
-import com.firechatbot.activities.UserDetailActivity;
-import com.firechatbot.pojo.UserDetailBean;
+import com.firechatbot.beans.UserDetailBean;
 import com.firechatbot.utils.AppConstants;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

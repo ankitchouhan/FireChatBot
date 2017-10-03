@@ -25,7 +25,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.firechatbot.R;
 import com.firechatbot.database.FireDatabase;
-import com.firechatbot.pojo.UserDetailBean;
+import com.firechatbot.beans.UserDetailBean;
 import com.firechatbot.utils.AppConstants;
 import com.firechatbot.utils.AppUtils;
 import com.firechatbot.utils.AuthenticationUtils;
