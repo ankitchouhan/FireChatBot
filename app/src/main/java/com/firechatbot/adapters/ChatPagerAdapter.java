@@ -32,10 +32,5 @@ public class ChatPagerAdapter extends FragmentPagerAdapter{
         return AppConstants.TABS_COUNT;
     }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
-        if (position == 1)
-            return "Chat";
-        return "Contacts";
-    }
+
 }

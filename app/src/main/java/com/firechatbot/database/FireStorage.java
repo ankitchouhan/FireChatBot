@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.firechatbot.activities.UserDetailActivity;
 import com.firechatbot.utils.AppConstants;
+import com.firechatbot.utils.AppUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -39,8 +40,8 @@ public class FireStorage {
     /**
      * Method to upload user profile image and get url.
      */
-    public void uploadUserImage(Uri file, String userId, final Activity activity) {
-        UploadTask uploadTask = mStorageReference.child(AppConstants.USER_NODE).child(userId).child(AppConstants.USER_PROFILE_IMAGE + file.getLastPathSegment()).putFile(file);
+    public void uploadUserImage(Uri file, String phoneNumber, final Activity activity) {
+        UploadTask uploadTask = mStorageReference.child(AppConstants.USER_NODE).child(phoneNumber).child(AppConstants.USER_PROFILE_IMAGE + file.getLastPathSegment()).putFile(file);
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -52,7 +53,7 @@ public class FireStorage {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                //Log.d("response",""+e.getMessage());
+                AppUtils.displayToast(activity,e.getMessage());
             }
         });
     }

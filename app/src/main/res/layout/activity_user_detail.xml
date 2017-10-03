@@ -15,15 +15,27 @@
         android:layout_marginTop="@dimen/d_sign_up_padding"
         android:text="@string/create_your_profile"
         android:textSize="@dimen/s_create_profile_size" />
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/sdv_profile_image"
         android:layout_width="@dimen/d_profile_image_size"
         android:layout_height="@dimen/d_profile_image_size"
         android:layout_gravity="center_horizontal"
+        app:placeholderImage="@drawable/ic_profile_avatar"
         app:roundAsCircle="true"
-        app:placeholderImage="@mipmap/ic_launcher_round"
+        android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/d_welcome_message_paddingTop" />
+    <ImageView
+        android:id="@+id/iv_profile_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/sdv_profile_image"
+        android:layout_marginTop="@dimen/d_contact_profile_name_padding"
+        android:src="@drawable/ic_signup_edit"/>
+</RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -67,7 +79,8 @@
             android:background="@drawable/shape_button_round"
             android:text="@string/button_done"
             android:textAllCaps="false"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/s_verify_size"/>
 
         <ProgressBar
             android:id="@+id/pb_progress"

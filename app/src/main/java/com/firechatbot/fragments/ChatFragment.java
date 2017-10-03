@@ -29,6 +29,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
+        AuthenticationUtils.getInstance().authStateListener(getActivity());
         initViews(view);
         initVariables();
         return view;

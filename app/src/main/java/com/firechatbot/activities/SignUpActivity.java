@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -40,6 +41,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private EditText phoneNumberEt;
     private CallbackManager mCallbackManager;
     private UserDetailBean mBean;
+    private ProgressBar progressBarPb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         TextView termsTv = (TextView) findViewById(R.id.tv_terms);
         layoutLL = (LinearLayout) findViewById(R.id.ll_sign_up);
         phoneNumberEt = (EditText) findViewById(R.id.et_number);
+        progressBarPb = (ProgressBar) findViewById(R.id.pb_progressbar);
         SpannableString welcomeSpan = SpannableString.valueOf(getString(R.string.welcome));
         welcomeSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.purple)), 11, welcomeSpan.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         welcomeTv.setText(welcomeSpan);
@@ -68,7 +71,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         termsSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.purple)), termsTv.getText().toString().indexOf("Privacy"), termsTv.getText().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         termsTv.setText(termsSpan);
         findViewById(R.id.b_verify).setOnClickListener(this);
-        findViewById(R.id.b_sign_up_facebook).setOnClickListener(this);
+        findViewById(R.id.f_sign_up_facebook).setOnClickListener(this);
     }
 
     /**
@@ -84,12 +87,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onCancel() {
-
+                AppUtils.snackBar(layoutLL, getString(R.string.fail_authenticate));
             }
 
             @Override
             public void onError(FacebookException error) {
-
+                AppUtils.snackBar(layoutLL, getString(R.string.fail_authenticate));
             }
         });
     }
@@ -134,10 +137,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
      * Method to check User Details.
      */
     private void getUser() {
-        if (AuthenticationUtils.getInstance().getUser() != null) {
-            startActivity(new Intent(SignUpActivity.this, MainActivity.class));
-            finish();
-        }
+        if (AuthenticationUtils.getInstance().getUser() != null)
+            startMainActivity();
     }
 
     @Override
@@ -145,13 +146,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         switch (view.getId()) {
             case R.id.b_verify:
                 if (AppUtils.validateNumber(phoneNumberEt.getText().toString().trim())) {
-                    //checkUserInDatabase();
+                    showViews();
+                    checkUserInDatabase();
                     // AuthenticationUtils.getInstance().signInAnonymously(this, layoutLL);
-                    startUserDetailActivity();
+                    //startUserDetailActivity();
                 } else
                     AppUtils.snackBar(layoutLL, getString(R.string.enter_valid_number));
                 break;
-            case R.id.b_sign_up_facebook:
+            case R.id.f_sign_up_facebook:
                 LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"));
                 break;
         }
@@ -177,4 +179,39 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         FireDatabase.getInstance().getUserProfile(this, phoneNumberEt.getText().toString().trim());
     }
 
+    /**
+     * Method to start main activity.
+     */
+    public void startMainActivity() {
+        startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+        finish();
+    }
+
+    /**
+     * Method to sign in.
+     * */
+    public void signIn()
+    {
+        AuthenticationUtils.getInstance().signInAnonymously(this);
+    }
+
+    /**
+     * Method to show progress bar.
+     */
+    public void showViews() {
+        progressBarPb.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Method to hide progress bar.
+     */
+    public void hideViews() {
+        progressBarPb.setVisibility(View.GONE);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

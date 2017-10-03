@@ -2,12 +2,13 @@
 <resources>
 
     <dimen name="d_sign_up_padding">30dp</dimen>
+    <dimen name="d_fb_signup_drawable_padding">5dp</dimen>
     <dimen name="d_welcome_marginTop">20dp</dimen>
-    <dimen name="s_welcome_size">30sp</dimen>
+    <dimen name="s_welcome_size">28sp</dimen>
     <dimen name="s_welcome_message_size">17sp</dimen>
     <dimen name="s_verify_size">17sp</dimen>
-    <dimen name="d_welcome_message_paddingTop">40dp</dimen>
-    <dimen name="d_welcome_message_paddingBottom">40dp</dimen>
+    <dimen name="d_welcome_message_paddingTop">30dp</dimen>
+    <dimen name="d_welcome_message_paddingBottom">30dp</dimen>
     <dimen name="d_view">1dp</dimen>
     <dimen name="d_ll_country_padding">8dp</dimen>
     <dimen name="d_country_spinner_marginTop">7dp</dimen>
@@ -19,8 +20,12 @@
 
     <dimen name="d_profile_icon_size">60dp</dimen>
     
-    <dimen name="d_contact_profile_size">110dp</dimen>
-    <dimen name="s_contact_profile_name_size">22sp</dimen>
+    <dimen name="d_contact_profile_size">100dp</dimen>
+    <dimen name="s_contact_profile_name_size">18sp</dimen>
+    <dimen name="d_contact_profile_name_padding">13dp</dimen>
+
+    <dimen name="d_contact_list_padding">10dp</dimen>
+    <dimen name="d_signup_progress_bar_size">40dp</dimen>
 
 
 

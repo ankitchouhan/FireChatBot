@@ -5,7 +5,7 @@
 
     <string name="facebook_app_id">1663025317062080</string>
 
-    <string name="welcome_message"><b>Enter your phone number</b> To create a \n FIRECHAT account, please verify\n your phone number</string>
+    <string name="welcome_message"><b>Enter your phone number</b> To create a FIRECHAT account, please verify your phone number</string>
 
     <string name="country">Country</string>
     <string name="phone_number">Phone Number</string>
@@ -38,5 +38,10 @@
     <string name="dont_see_what_looking">Don"'"t see who you"'"re looking for?</string>
     <string name="add_friends">Add Friends</string>
     <string name="contacts">Contacts</string>
+    <string-array name="tabs">
+        <item>Contacts</item>
+        <item>Chat</item>
+        <item>Settings</item>
+    </string-array>
 
 </resources>

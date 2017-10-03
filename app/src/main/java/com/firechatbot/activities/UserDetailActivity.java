@@ -56,8 +56,8 @@ public class UserDetailActivity extends AppCompatActivity implements View.OnClic
         firstNameEt = (EditText) findViewById(R.id.et_first_name);
         lastNameEt = (EditText) findViewById(R.id.et_last_name);
         profileImageSdv = (SimpleDraweeView) findViewById(R.id.sdv_profile_image);
+        findViewById(R.id.iv_profile_image).setOnClickListener(this);
         findViewById(R.id.b_done).setOnClickListener(this);
-        profileImageSdv.setOnClickListener(this);
     }
 
     /**
@@ -125,12 +125,12 @@ public class UserDetailActivity extends AppCompatActivity implements View.OnClic
         switch (view.getId()) {
             case R.id.b_done:
                 if (validateName()) {
-                    //checkUserInDatabase();
                     showViews();
-                    AuthenticationUtils.getInstance().signInAnonymously(this, layoutLL);
+                    //checkUserInDatabase();
+                    AuthenticationUtils.getInstance().signInAnonymously(this);
                 }
                 break;
-            case R.id.sdv_profile_image:
+            case R.id.iv_profile_image:
                 requestStoragePermission();
         }
     }
@@ -141,7 +141,7 @@ public class UserDetailActivity extends AppCompatActivity implements View.OnClic
     public void uploadUserProfile(String userId) {
         mUserId = userId;
         if (mFile != null) {
-            FireStorage.getInstance().uploadUserImage(mFile, mUserId, this);
+            FireStorage.getInstance().uploadUserImage(mFile, mPhoneNumber, this);
             return;
         } else if (mFbPic != null) {
             uploadData(mFbPic);

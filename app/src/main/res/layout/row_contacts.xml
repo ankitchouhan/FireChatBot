@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fresco="http://schemas.android.com/tools"
-    android:padding="@dimen/d_welcome_marginTop">
+    android:layout_marginTop="@dimen/d_contact_list_padding"
+    android:layout_marginStart="@dimen/d_contact_list_padding">
 
 
     <com.facebook.drawee.view.SimpleDraweeView
@@ -22,7 +23,7 @@
         android:layout_toEndOf="@id/sdv_contact_icon"
         android:text="@string/add_friends"
         android:textColor="@color/black"
-        android:textSize="@dimen/s_welcome_message_size"
+        android:textSize="@dimen/s_create_profile_size"
         android:layout_marginStart="@dimen/d_ll_country_padding"
         android:paddingTop="@dimen/d_country_spinner_marginTop"
         android:maxLines="2"/>
@@ -32,8 +33,9 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/sdv_contact_icon"
         android:layout_below="@id/tv_contact_name"
-        android:padding="@dimen/d_ll_country_padding"
+        android:layout_marginStart="@dimen/d_ll_country_padding"
+        android:layout_marginTop="@dimen/d_country_spinner_marginTop"
         android:text="@string/add_friends"
-        android:textSize="@dimen/s_welcome_message_size"/>
+        android:textSize="@dimen/s_create_profile_size"/>
 
 </RelativeLayout>

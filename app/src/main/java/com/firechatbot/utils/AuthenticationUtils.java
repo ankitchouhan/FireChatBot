@@ -39,22 +39,27 @@ public class AuthenticationUtils {
     /**
      * Method to signIn Anonymously.
      */
-    public void signInAnonymously(final Activity activity, final View layoutLL) {
+    public void signInAnonymously(final Activity activity) {
         mAuth.signInAnonymously()
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            ((UserDetailActivity) activity).uploadUserProfile(getUser().getUid());
-                        } else
+                            if (activity instanceof UserDetailActivity)
+                                ((UserDetailActivity) activity).uploadUserProfile(getUser().getUid());
+                            else
+                                ((SignUpActivity) activity).startMainActivity();
+                        } else if (activity instanceof UserDetailActivity) {
+                            ((UserDetailActivity) activity).hideViews();
+                            AppUtils.displayToast(activity, activity.getString(R.string.fail_authenticate));
+                        }else
                         {
-                            ((UserDetailActivity)activity).hideViews();
-                            AppUtils.snackBar(layoutLL, activity.getString(R.string.fail_authenticate));
+                            ((SignUpActivity)activity).hideViews();
+                            AppUtils.displayToast(activity, activity.getString(R.string.fail_authenticate));
                         }
                     }
                 });
     }
-
 
     /**
      * Method to assign authStateListener.
