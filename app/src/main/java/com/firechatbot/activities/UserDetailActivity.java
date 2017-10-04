@@ -10,10 +10,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -23,18 +25,20 @@ import com.firechatbot.database.FireDatabase;
 import com.firechatbot.database.FireStorage;
 import com.firechatbot.beans.UserDetailBean;
 import com.firechatbot.utils.AppConstants;
+import com.firechatbot.utils.AppUtils;
 import com.firechatbot.utils.AuthenticationUtils;
 
 
-public class UserDetailActivity extends AppCompatActivity implements View.OnClickListener {
+public class UserDetailActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
 
-    private LinearLayout layoutLL;
+    //private LinearLayout layoutLL;
     private ProgressBar progressBarPb;
     private EditText firstNameEt, lastNameEt;
     private String mPhoneNumber;
     private SimpleDraweeView profileImageSdv;
     private String mUserId;
     private Uri mFile, mFbPic;
+    private Toolbar toolbarTb;
 
 
     @Override
@@ -51,12 +55,15 @@ public class UserDetailActivity extends AppCompatActivity implements View.OnClic
      */
     private void initViews() {
         progressBarPb = (ProgressBar) findViewById(R.id.pb_progress);
-        layoutLL = (LinearLayout) findViewById(R.id.ll_sign_up);
+        //layoutLL = (LinearLayout) findViewById(R.id.ll_sign_up);
         firstNameEt = (EditText) findViewById(R.id.et_first_name);
         lastNameEt = (EditText) findViewById(R.id.et_last_name);
         profileImageSdv = (SimpleDraweeView) findViewById(R.id.sdv_profile_image);
+        toolbarTb = (Toolbar) findViewById(R.id.tb_toolbar);
         findViewById(R.id.iv_profile_image).setOnClickListener(this);
         findViewById(R.id.b_done).setOnClickListener(this);
+        findViewById(R.id.ll_user_details).setOnTouchListener(this);
+        setSupportActionBar(toolbarTb);
     }
 
     /**
@@ -111,22 +118,18 @@ public class UserDetailActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    /**
-     * Method to start main activity if user exist in database.
-     */
-    private void checkUserInDatabase() {
-        FireDatabase.getInstance().getUserProfile(this, mPhoneNumber);
-    }
-
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.b_done:
                 if (validateName()) {
-                    showViews();
-                    //checkUserInDatabase();
-                    AuthenticationUtils.getInstance().signInAnonymously(this);
+                    if (AppUtils.checkInternet(this))
+                    {
+                        showViews();
+                        AuthenticationUtils.getInstance().signInAnonymously(this);
+                    }
+                    else
+                        AppUtils.displayToast(this,getString(R.string.internet_unavailable));
                 }
                 break;
             case R.id.iv_profile_image:
@@ -180,7 +183,7 @@ public class UserDetailActivity extends AppCompatActivity implements View.OnClic
      * Method to start main activity.
      */
     public void startMainActivity() {
-        startActivity(new Intent(UserDetailActivity.this, MainActivity.class));
+        startActivity(new Intent(UserDetailActivity.this, MainActivity.class).putExtra(AppConstants.INTENT_PHONE_NUMBER,mPhoneNumber));
         finish();
     }
 
@@ -198,4 +201,19 @@ public class UserDetailActivity extends AppCompatActivity implements View.OnClic
         progressBarPb.setVisibility(View.GONE);
     }
 
+
+    /**
+     * Method to hide keyboard.
+     */
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        if (view.getId() == R.id.ll_user_details)
+            hideKeyboard(view);
+        return true;
+    }
 }

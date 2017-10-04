@@ -38,6 +38,7 @@
         <activity
             android:name=".activities.MainActivity"
             android:screenOrientation="portrait"
+            android:label="@string/chat"
             android:launchMode="singleTop"/>
         <activity
             android:name=".activities.SignUpActivity"
@@ -46,6 +47,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activities.UserDetailActivity"
+            android:label="@string/sign_up"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"/>
     </application>

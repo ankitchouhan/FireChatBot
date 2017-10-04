@@ -1,71 +1,96 @@
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:fresco="http://schemas.android.com/tools"
+    <include layout="@layout/include_toolbar" />
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="@dimen/d_search_size"
+        android:background="@color/silver"
+        android:padding="@dimen/d_contact_profile_name_padding">
 
-
-        <include layout="@layout/include_toolbar" />
-
-        <RelativeLayout
+        <android.support.v7.widget.SearchView
+            android:id="@+id/sv_search"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:queryBackground="@null"
+            android:background="@drawable/shape_search_view" />
+    </FrameLayout>
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/sdv_profile_icon"
-                android:layout_width="@dimen/d_contact_profile_size"
-                android:layout_height="@dimen/d_contact_profile_size"
-                android:layout_marginBottom="@dimen/d_verify_button_marginTop"
-                android:layout_marginStart="@dimen/d_contact_list_padding"
-                app:placeholderImage="@mipmap/ic_launcher_round"
-                app:roundAsCircle="true"
-                fresco:scaleType="centerCrop" />
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/sdv_profile_icon"
-                android:maxLength="25"
-                android:padding="@dimen/d_contact_profile_name_padding"
-                android:text="@string/add_friends"
-                android:textColor="@color/black"
-                android:textSize="@dimen/s_contact_profile_name_size" />
-
-            <TextView
-                android:id="@+id/tv_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_name"
-                android:layout_marginStart="@dimen/d_contact_profile_name_padding"
-                android:layout_toEndOf="@id/sdv_profile_icon"
-                android:maxLength="20"
-                android:text="@string/add_friends"
-                android:textColor="@color/black"
-                android:textSize="@dimen/s_contact_profile_name_size" />
-        </RelativeLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/light_gray"
-            android:gravity="center_vertical"
-            android:paddingStart="@dimen/d_verify_button_marginTop"
-            android:text="@string/contacts"
-            android:textColor="@color/black"
-            android:textSize="@dimen/s_contact_profile_name_size" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_contacts"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:nestedScrollingEnabled="false"/>
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/d_contact_profile_name_padding">
 
-    </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_fragment_profile_icon"
+                    android:layout_width="@dimen/d_contact_profile_size"
+                    android:layout_height="@dimen/d_contact_profile_size"
+                    android:layout_marginBottom="@dimen/d_verify_button_marginTop"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/s_welcome_size"
+                    android:textStyle="bold"
+                    android:background="@drawable/shape_contact_icon"
+                    android:layout_marginStart="@dimen/d_contact_list_padding" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/tv_fragment_profile_icon"
+                    android:maxLength="25"
+                    android:layout_marginStart="@dimen/d_contact_list_padding"
+                    android:layout_marginTop="@dimen/d_contact_list_padding"
+                    android:text="@string/add_friends"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/s_contact_profile_name_size" />
+
+                <TextView
+                    android:id="@+id/tv_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_name"
+                    android:layout_marginStart="@dimen/d_contact_list_padding"
+                    android:layout_marginTop="@dimen/d_fb_signup_drawable_padding"
+                    android:layout_toEndOf="@id/tv_fragment_profile_icon"
+                    android:maxLength="20"
+                    android:text="@string/add_friends"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/s_contact_profile_name_size" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d_contact_fragment_text_height"
+                android:background="@color/light_gray"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/d_verify_button_marginTop"
+                android:text="@string/contacts"
+                android:textColor="@color/black"
+                android:textSize="@dimen/s_contact_profile_name_size" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_contacts"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="@dimen/s_contact_profile_name_size"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>
 

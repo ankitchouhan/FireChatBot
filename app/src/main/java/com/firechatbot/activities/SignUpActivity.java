@@ -50,7 +50,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_sign_up);
         initViews();
         initSpinner();
-        getUser();
+        //getUser();
     }
 
     /**
@@ -146,10 +146,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         switch (view.getId()) {
             case R.id.b_verify:
                 if (AppUtils.validateNumber(phoneNumberEt.getText().toString().trim())) {
-                    showViews();
-                    checkUserInDatabase();
-                    // AuthenticationUtils.getInstance().signInAnonymously(this, layoutLL);
-                    //startUserDetailActivity();
+                    if (AppUtils.checkInternet(this))
+                    {
+                        showViews();
+                        checkUserInDatabase();
+                    }
+                    else
+                        AppUtils.displayToast(this,getString(R.string.internet_unavailable));
                 } else
                     AppUtils.snackBar(layoutLL, getString(R.string.enter_valid_number));
                 break;
@@ -176,14 +179,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
      * Method to start main activity if user exist in database.
      */
     private void checkUserInDatabase() {
-        FireDatabase.getInstance().getUserProfile(this, phoneNumberEt.getText().toString().trim());
+        FireDatabase.getInstance().checkUserProfile(this, phoneNumberEt.getText().toString().trim());
     }
 
     /**
      * Method to start main activity.
      */
     public void startMainActivity() {
-        startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+        startActivity(new Intent(SignUpActivity.this, MainActivity.class).putExtra(AppConstants.INTENT_PHONE_NUMBER,phoneNumberEt.getText().toString().trim()));
         finish();
     }
 

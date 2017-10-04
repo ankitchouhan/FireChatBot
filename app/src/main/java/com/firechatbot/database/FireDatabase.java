@@ -3,7 +3,9 @@ package com.firechatbot.database;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.util.Log;
 
+import com.firechatbot.activities.MainActivity;
 import com.firechatbot.activities.SignUpActivity;
 import com.firechatbot.beans.UserDetailBean;
 import com.firechatbot.utils.AppConstants;
@@ -50,12 +52,11 @@ public class FireDatabase {
     /**
      * Method to check user account in database.
      */
-    public void getUserProfile(final Activity activity, final String phone) {
+    public void checkUserProfile(final Activity activity, final String phone) {
         Query query = mReference.child(AppConstants.USER_NODE).orderByChild(AppConstants.USER_PHONE).equalTo(phone);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //Log.d("ankit",""+dataSnapshot.getValue());
                 if (dataSnapshot.getValue()!=null)
                     ((SignUpActivity) activity).signIn();
                 else
@@ -68,4 +69,35 @@ public class FireDatabase {
             }
         });
     }
+
+    /**
+     * Method to get current user details from database.
+     * */
+    public void getUserDetails(final Activity activity, String phone)
+    {
+        Query query = mReference.child(AppConstants.USER_NODE).orderByChild(AppConstants.USER_PHONE).equalTo(phone);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                {
+                    UserDetailBean bean = snapshot.getValue(UserDetailBean.class);
+                    if (bean!=null)
+                    {
+                        UserDetailBean detailBean = new UserDetailBean();
+                        detailBean.setFirstName(bean.getFirstName());
+                        detailBean.setLastName(bean.getLastName());
+                        detailBean.setPhone(bean.getPhone());
+                        ((MainActivity)activity).setUserDetails(detailBean);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 }

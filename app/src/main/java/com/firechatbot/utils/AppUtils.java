@@ -2,6 +2,7 @@ package com.firechatbot.utils;
 
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -32,6 +33,15 @@ public class AppUtils {
      */
     public static boolean validateNumber(String number) {
         return (!TextUtils.isEmpty(number) && number.matches("[0-9]{10}") && (number.startsWith("9")||(number.startsWith("8"))||(number.startsWith("7"))));
+    }
+
+    /**
+     * Method to check internet availability.
+     * */
+    public static boolean checkInternet(Context context)
+    {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return connectivityManager.getActiveNetworkInfo() !=null;
     }
 
 

@@ -3,7 +3,6 @@ package com.firechatbot.utils;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
-import android.view.View;
 
 import com.firechatbot.R;
 import com.firechatbot.activities.MainActivity;

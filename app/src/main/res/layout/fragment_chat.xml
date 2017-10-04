@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_chat_icon"
-        android:layout_marginTop="@dimen/d_welcome_message_paddingTop"/>
+        android:layout_marginTop="@dimen/d_profile_icon_size"/>
 
     <TextView
         android:id="@+id/tv_add_chat_sample"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/dont_see_what_looking"
-        android:textSize="@dimen/s_verify_size"
+        android:textSize="@dimen/s_create_profile_size"
         android:paddingTop="@dimen/d_welcome_message_paddingTop"
         android:paddingBottom="@dimen/d_verify_button_marginTop"/>
     

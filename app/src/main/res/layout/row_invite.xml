@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/d_invite_image_marginStart"
+    android:layout_marginTop="@dimen/d_contact_list_padding">
+
+    <ImageView
+        android:id="@+id/tv_invite"
+        android:layout_width="@dimen/d_signup_progress_bar_size"
+        android:layout_height="@dimen/d_signup_progress_bar_size"
+        android:background="@drawable/shape_invite_icon"
+        android:src="@drawable/ic_add"/>
+
+    <TextView
+        android:id="@+id/tv_invite_sample"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/d_ll_country_padding"
+        android:layout_marginStart="@dimen/d_invite_marginStart"
+        android:layout_toEndOf="@id/tv_invite"
+        android:paddingTop="@dimen/d_ll_country_padding"
+        android:text="@string/invite"
+        android:textColor="@color/black"
+        android:textSize="@dimen/s_contact_profile_name_size"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d_view"
+        android:background="@color/silver"
+        android:layout_below="@id/tv_invite"
+        android:layout_alignStart="@id/tv_invite_sample"
+        android:layout_marginTop="@dimen/d_contact_list_padding"/>
+
+</RelativeLayout>

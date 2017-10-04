@@ -2,40 +2,42 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fresco="http://schemas.android.com/tools"
-    android:layout_marginTop="@dimen/d_contact_list_padding"
+    android:layout_marginTop="@dimen/d_welcome_marginTop"
     android:layout_marginStart="@dimen/d_contact_list_padding">
 
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/sdv_contact_icon"
+    <TextView
+        android:id="@+id/tv_contact_icon"
         android:layout_width="@dimen/d_profile_icon_size"
         android:layout_height="@dimen/d_profile_icon_size"
-        app:roundAsCircle="true"
-        app:placeholderImage="@mipmap/ic_launcher_round"
-        fresco:scaleType="centerCrop"/>
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/s_contact_profile_name_size"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:background="@drawable/shape_contact_icon"/>
 
     <TextView
         android:id="@+id/tv_contact_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/sdv_contact_icon"
+        android:layout_toEndOf="@id/tv_contact_icon"
         android:text="@string/add_friends"
         android:textColor="@color/black"
-        android:textSize="@dimen/s_create_profile_size"
-        android:layout_marginStart="@dimen/d_ll_country_padding"
-        android:paddingTop="@dimen/d_country_spinner_marginTop"
-        android:maxLines="2"/>
+        android:textSize="@dimen/s_contact_profile_name_size"
+        android:layout_marginStart="@dimen/d_row_contact_marginStart"
+        android:layout_marginEnd="@dimen/d_ll_country_padding"
+        android:maxLines="1"/>
     <TextView
         android:id="@+id/tv_contact_last_seen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/sdv_contact_icon"
+        android:layout_toEndOf="@id/tv_contact_icon"
         android:layout_below="@id/tv_contact_name"
-        android:layout_marginStart="@dimen/d_ll_country_padding"
-        android:layout_marginTop="@dimen/d_country_spinner_marginTop"
+        android:layout_marginStart="@dimen/d_row_contact_marginStart"
+        android:layout_marginEnd="@dimen/d_ll_country_padding"
+        android:layout_marginTop="@dimen/d_name_paddingTop"
         android:text="@string/add_friends"
-        android:textSize="@dimen/s_create_profile_size"/>
+        android:textSize="@dimen/s_welcome_message_size"/>
 
 </RelativeLayout>
