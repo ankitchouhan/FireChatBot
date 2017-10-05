@@ -17,7 +17,8 @@
     <dimen name="d_spinner_width">150dp</dimen>
     <dimen name="s_create_profile_size">15sp</dimen>
     <dimen name="d_profile_image_size">140dp</dimen>
-
+    <dimen name="d_sign_up_verify_button_padding">18dp</dimen>
+    <dimen name="s_sign_up_verify_button_text">16sp</dimen>
     <dimen name="d_profile_icon_size">50dp</dimen>
     
     <dimen name="d_contact_profile_size">90dp</dimen>
@@ -37,6 +38,22 @@
 
     <dimen name="s_toolbar_heading_size">20sp</dimen>
     <dimen name="d_invite_image_marginStart">20dp</dimen>
+
+    <dimen name="row_chat_name_marginStart">12dp</dimen>
+    <dimen name="d_message_area_edittext_padding">10dp</dimen>
+    <dimen name="d_message_area_smile_padding">7dp</dimen>
+    <dimen name="d_message_area_location_padding">4dp</dimen>
+
+    <dimen name="d_row_contact_invite_margin">7dp</dimen>
+    <dimen name="d_row_contact_invite_paddingStart">15dp</dimen>
+    <dimen name="d_row_contact_invite_paddingTop">8dp</dimen>
+    <dimen name="s_row_contact_invite_contact_name_text">17sp</dimen>
+    <dimen name="s_row_contact_invite_contact_number_text">15sp</dimen>
+
+    <dimen name="d_chat_activity_send_paddingStart">12dp</dimen>
+    <dimen name="d_chat_activity_send_paddingTop">7dp</dimen>
+
+
 
 
 </resources>

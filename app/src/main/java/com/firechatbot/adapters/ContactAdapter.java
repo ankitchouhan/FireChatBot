@@ -1,7 +1,9 @@
 package com.firechatbot.adapters;
 
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.firechatbot.R;
+import com.firechatbot.activities.MainActivity;
 import com.firechatbot.beans.ContactBean;
 
 import java.util.ArrayList;
@@ -22,9 +25,10 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private List<ContactBean> mList;
     private Filter mFilter;
     private List<ContactBean> mFilteredList;
-
-    public ContactAdapter(List<ContactBean> mList)
+    private Context mContext;
+    public ContactAdapter(Context mContext,List<ContactBean> mList)
     {
+        this.mContext = mContext;
         this.mList = mList;
         mFilteredList = new ArrayList<>();
         mFilteredList.addAll(mList);
@@ -54,7 +58,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             case CONTACT_VIEW:
                 ContactViewHolder contactViewHolder = (ContactViewHolder) holder;
                 int pos = position-1;
-                if (mList.get(pos).getName()!=null)
+                if (mList.get(pos).getName()!=null )
                     contactViewHolder.nameTv.setText(mList.get(pos).getName());
                 else
                     contactViewHolder.nameTv.setVisibility(View.GONE);
@@ -63,7 +67,13 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 else
                     contactViewHolder.lastSeenTv.setVisibility(View.GONE);
                 contactViewHolder.contactIconTv.setText(setContactImage(mList.get(pos).getName()));
+                if (mList.get(pos).getStatus()==1)
+                {
+                    //contactViewHolder.nameTv.setText(mList.get(pos).getName());
+                    contactViewHolder.inviteContactTv.setVisibility(View.GONE);
+                }
                 break;
+
         }
 
     }
@@ -126,17 +136,25 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     /**
      * Contact ViewHolder Class.
      * */
-    private class ContactViewHolder extends RecyclerView.ViewHolder{
+    private class ContactViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView contactIconTv;
         private TextView nameTv,lastSeenTv;
+        private TextView inviteContactTv;
         ContactViewHolder(View itemView) {
             super(itemView);
             contactIconTv = itemView.findViewById(R.id.tv_contact_icon);
             nameTv = itemView.findViewById(R.id.tv_contact_name);
             lastSeenTv = itemView.findViewById(R.id.tv_contact_last_seen);
+            inviteContactTv = itemView.findViewById(R.id.tv_invite_contact);
+            itemView.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View view) {
+            if (mList.get(getAdapterPosition()-1).getStatus()==1)
+            ((MainActivity)mContext).startChatActivity(mList.get(getAdapterPosition()-1));
+        }
     }
 
     /**

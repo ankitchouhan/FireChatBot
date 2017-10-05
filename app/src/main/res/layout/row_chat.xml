@@ -11,8 +11,7 @@
         android:id="@+id/sdv_profile_icon"
         android:layout_width="@dimen/d_profile_icon_size"
         android:layout_height="@dimen/d_profile_icon_size"
-        app:roundAsCircle="true"
-        app:placeholderImage="@mipmap/ic_launcher_round"
+        app:placeholderImage="@drawable/ic_profile_avatar"
         fresco:scaleType="centerCrop"/>
 
     <TextView
@@ -22,7 +21,7 @@
         android:text="@string/add_friends"
         android:textColor="@color/black"
         android:textSize="@dimen/s_welcome_message_size"
-        android:layout_marginStart="@dimen/d_ll_country_padding"
+        android:layout_marginStart="@dimen/row_chat_name_marginStart"
         android:paddingTop="@dimen/d_country_spinner_marginTop"
         android:maxLines="1"/>
 

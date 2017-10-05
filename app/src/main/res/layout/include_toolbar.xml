@@ -18,7 +18,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="Chat"
                 android:textColor="@color/black"
                 android:textSize="@dimen/s_toolbar_heading_size"
                 android:textStyle="bold" />
@@ -29,7 +28,17 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_otp_back"
-                android:visibility="gone"/>
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/d_contact_profile_name_padding"
+                android:src="@drawable/ic_usermessage_phone"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/iv_edit"
@@ -37,13 +46,24 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:visibility="gone"
                 android:layout_marginEnd="@dimen/d_contact_profile_name_padding"
-                android:src="@drawable/ic_usermessage_phone" />
+                android:src="@drawable/ic_chat_edit"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_add"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:visibility="gone"
+                android:layout_marginEnd="@dimen/d_contact_profile_name_padding" />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/d_view"
-        android:background="@color/black" />
+        android:background="@color/send" />
 </LinearLayout>

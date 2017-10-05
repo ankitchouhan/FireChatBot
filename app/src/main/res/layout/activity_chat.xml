@@ -4,11 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView
+    <include layout="@layout/include_toolbar"/>
+    <!--<ScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@drawable/bg">
 
         <RelativeLayout
             android:id="@+id/rl_layout2"
@@ -21,13 +23,20 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"/>
         </RelativeLayout>
-    </ScrollView>
+    </ScrollView>-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_chat_message"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="bottom"
+        android:layout_marginTop="@dimen/d_row_contact_text_marginTop"
         android:padding="@dimen/d_row_contact_text_marginTop">
 
         <ImageView
@@ -43,8 +52,8 @@
             android:layout_height="wrap_content"
             android:maxLines="3"
             android:layout_weight="1"
+            android:focusableInTouchMode="true"
             android:padding="@dimen/d_message_area_edittext_padding"
-            android:inputType="text"
             android:background="@drawable/shape_message"/>
         <ImageView
             android:id="@+id/iv_camera"
@@ -66,6 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
+
             android:padding="@dimen/d_message_area_location_padding"
             android:src="@drawable/ic_usermessage_location"/>
 
@@ -76,10 +86,15 @@
             android:background="@drawable/shape_button_round"
             android:text="@string/send"
             android:textColor="@color/white"
-            android:padding="@dimen/d_message_area_edittext_padding"
+            android:visibility="visible"
+            android:paddingStart="@dimen/d_chat_activity_send_paddingStart"
+            android:paddingEnd="@dimen/d_chat_activity_send_paddingStart"
+            android:paddingBottom="@dimen/d_chat_activity_send_paddingTop"
+            android:paddingTop="@dimen/d_chat_activity_send_paddingTop"
+
             android:textSize="@dimen/s_create_profile_size"
             android:layout_marginStart="@dimen/d_message_area_smile_padding"
-            android:layout_marginBottom="@dimen/d_name_paddingTop"
+            android:layout_marginBottom="@dimen/d_message_area_smile_padding"
             android:layout_marginEnd="@dimen/d_row_contact_text_marginTop"/>
     </LinearLayout>
 </LinearLayout>

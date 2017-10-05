@@ -16,6 +16,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FireDatabase {
 
 
@@ -91,6 +94,38 @@ public class FireDatabase {
                         ((MainActivity)activity).setUserDetails(detailBean);
                     }
                 }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    /**
+     * Method to get contacts from database.
+     * */
+    public void getContacts(final Activity activity)
+    {
+        Query query = mReference.child(AppConstants.USER_NODE).orderByKey();
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<UserDetailBean> list = new ArrayList<>();
+                for (DataSnapshot snapshot:dataSnapshot.getChildren())
+                {
+                    UserDetailBean bean = snapshot.getValue(UserDetailBean.class);
+                    if (bean!=null)
+                    {
+                        bean.getFirstName();
+                        bean.getLastName();
+                        bean.getPhone();
+                        bean.getProfileUri();
+                        list.add(bean);
+                    }
+                }
+                ((MainActivity)activity).getContactsFromDatabase(list);
             }
 
             @Override

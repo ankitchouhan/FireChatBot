@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -38,7 +39,6 @@ public class UserDetailActivity extends AppCompatActivity implements View.OnClic
     private SimpleDraweeView profileImageSdv;
     private String mUserId;
     private Uri mFile, mFbPic;
-    private Toolbar toolbarTb;
 
 
     @Override
@@ -59,11 +59,13 @@ public class UserDetailActivity extends AppCompatActivity implements View.OnClic
         firstNameEt = (EditText) findViewById(R.id.et_first_name);
         lastNameEt = (EditText) findViewById(R.id.et_last_name);
         profileImageSdv = (SimpleDraweeView) findViewById(R.id.sdv_profile_image);
-        toolbarTb = (Toolbar) findViewById(R.id.tb_toolbar);
+        Toolbar toolbarTb = (Toolbar) findViewById(R.id.tb_toolbar);
         findViewById(R.id.iv_profile_image).setOnClickListener(this);
         findViewById(R.id.b_done).setOnClickListener(this);
         findViewById(R.id.ll_user_details).setOnTouchListener(this);
         setSupportActionBar(toolbarTb);
+        TextView heading = toolbarTb.findViewById(R.id.tv_heading);
+        heading.setText(getString(R.string.sign_up));
     }
 
     /**

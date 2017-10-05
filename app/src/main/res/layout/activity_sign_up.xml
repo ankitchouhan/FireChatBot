@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:maxLines="3"
+            android:maxLines="4"
             android:paddingBottom="@dimen/d_welcome_message_paddingBottom"
             android:paddingTop="@dimen/d_welcome_message_paddingTop"
             android:text="@string/welcome_message"
@@ -106,8 +106,9 @@
             android:background="@drawable/shape_button_round"
             android:text="@string/verify_phone_number_button"
             android:textAllCaps="false"
+            android:padding="@dimen/d_sign_up_verify_button_padding"
             android:textColor="@color/white"
-            android:textSize="@dimen/s_create_profile_size" />
+            android:textSize="@dimen/s_sign_up_verify_button_text" />
 
         <TextView
             android:id="@+id/tv_terms"
@@ -139,7 +140,7 @@
             android:layout_marginEnd="@dimen/d_sign_up_padding"
             android:layout_marginBottom="@dimen/d_welcome_marginTop"
             android:background="@drawable/shape_button_facebook"
-            android:padding="@dimen/d_ll_country_padding">
+            android:padding="@dimen/d_contact_profile_name_padding">
 
             <TextView
                 android:layout_width="wrap_content"

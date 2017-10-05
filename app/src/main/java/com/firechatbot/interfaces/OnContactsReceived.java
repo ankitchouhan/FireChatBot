@@ -1,8 +1,11 @@
 package com.firechatbot.interfaces;
 
-/**
- * Created by admin1 on 5/10/17.
- */
+
+import com.firechatbot.beans.UserDetailBean;
+
+import java.util.List;
 
 public interface OnContactsReceived {
+    void getContacts(List<UserDetailBean> list);
+    void getCurrentUser(UserDetailBean bean);
 }

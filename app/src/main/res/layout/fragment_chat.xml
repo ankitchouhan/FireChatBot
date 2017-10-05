@@ -5,7 +5,6 @@
     android:orientation="vertical"
     tools:context="com.firechatbot.fragments.ChatFragment">
 
-    <include layout="@layout/include_toolbar" />
 
     <ImageView
         android:id="@+id/iv_chat_image_sample"

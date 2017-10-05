@@ -2,14 +2,13 @@ package com.firechatbot.fragments;
 
 
 import android.app.Activity;
-import android.database.Cursor;
+import android.content.Context;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,18 +19,21 @@ import com.firechatbot.activities.MainActivity;
 import com.firechatbot.adapters.ContactAdapter;
 import com.firechatbot.beans.ContactBean;
 import com.firechatbot.beans.UserDetailBean;
+import com.firechatbot.interfaces.OnContactsReceived;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ContactsFragment extends Fragment implements SearchView.OnQueryTextListener {
+public class ContactsFragment extends Fragment implements SearchView.OnQueryTextListener, View.OnClickListener,OnContactsReceived{
 
     private TextView profileImageTv;
     private TextView nameTv, phoneTv;
     private RecyclerView recyclerViewRv;
     private ContactAdapter mContactAdapter;
-    //private List<ContactBean> mList;
+    private List<UserDetailBean> mContactList;
+    private List<ContactBean> mList;
+    private List<ContactBean> mDbList;
     private Activity mActivity;
 
     @Override
@@ -39,7 +41,7 @@ public class ContactsFragment extends Fragment implements SearchView.OnQueryText
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contacts, container, false);
         initViews(view);
-        //initVariables();
+        initVariables();
         return view;
     }
 
@@ -62,43 +64,18 @@ public class ContactsFragment extends Fragment implements SearchView.OnQueryText
      * Method to initialize variables.
      */
     private void initVariables() {
-        //mList = new ArrayList<>();
-        mContactAdapter = new ContactAdapter(getContacts());
-        recyclerViewRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recyclerViewRv.setAdapter(mContactAdapter);
-    }
-
-    /**
-     * Method to set current user details.
-     */
-    private void getCurrentUser() {
-        UserDetailBean detailBean = ((MainActivity) mActivity).mUserDetails;
-        if (detailBean!=null)
-        {
-            nameTv.setText(detailBean.getFirstName() + " " + detailBean.getLastName());
-            phoneTv.setText(detailBean.getPhone());
-            profileImageTv.setText(setContactImage(detailBean.getFirstName()+" "+detailBean.getLastName()));
-        }
-
-    }
-
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (((MainActivity) mActivity).contactDetails()) {
+        mList = new ArrayList<>();
+        mDbList = new ArrayList<>();
+        if (((MainActivity) mActivity).contactDetails() != null) {
+            mList.clear();
+            mList.addAll(((MainActivity) mActivity).contactDetails());
            /* mList.clear();
             mList.addAll(getContacts());
             mContactAdapter.notifyDataSetChanged();*/
-            initVariables();
-            getCurrentUser();
         }
+        mContactAdapter = new ContactAdapter(mActivity,mList);
+        recyclerViewRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        recyclerViewRv.setAdapter(mContactAdapter);
     }
 
     /**
@@ -135,7 +112,7 @@ public class ContactsFragment extends Fragment implements SearchView.OnQueryText
     /**
      * Method to get contacts details
      */
-    private List<ContactBean> getContacts() {
+    /*private List<ContactBean> getContacts() {
         List<ContactBean> list = new ArrayList<>();
         Cursor cursor = mActivity.getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC");
         if (cursor != null && cursor.moveToFirst()) {
@@ -158,23 +135,20 @@ public class ContactsFragment extends Fragment implements SearchView.OnQueryText
             cursor.close();
         }
         return list;
-    }
+    }*/
 
 
     /**
      * Method to display contact image.
-     * */
-    private String setContactImage(String name)
-    {
+     */
+    private String setContactImage(String name) {
         String[] contact = name.split(" ");
-        String displayName="";
-        for (String data : contact)
-        {
-            displayName = displayName+data.charAt(0);
+        String displayName = "";
+        for (String data : contact) {
+            displayName = displayName + data.charAt(0);
         }
         return displayName;
     }
-
 
     @Override
     public boolean onQueryTextSubmit(String query) {
@@ -185,5 +159,66 @@ public class ContactsFragment extends Fragment implements SearchView.OnQueryText
     public boolean onQueryTextChange(String newText) {
         mContactAdapter.getFilter().filter(newText.toLowerCase().trim());
         return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+    }
+
+    @Override
+    public void getContacts(List<UserDetailBean> list) {
+        mContactList = list;
+        filterContacts();
+    }
+
+    @Override
+    public void getCurrentUser(UserDetailBean bean) {
+        if (bean != null) {
+            nameTv.setText(bean.getFirstName() + " " + bean.getLastName());
+            phoneTv.setText(bean.getPhone());
+            profileImageTv.setText(setContactImage(bean.getFirstName() + " " + bean.getLastName()));
+        }
+    }
+
+    /**
+     * Method to filter contact.
+     * */
+    private void filterContacts()
+    {
+        List<ContactBean> nonUserList = new ArrayList<>();
+        for (ContactBean bean : mList)
+        {
+            int count =0;
+            String number = bean.getPhone();
+            if (number.contains("-"))
+                number = number.replaceAll("-","");
+            if (number.contains(" "))
+                number = number.replaceAll(" ","");
+            if (number.contains("+91"))
+                number = number.replace("+91","");
+            if (number.length()==11)
+                number = number.substring(1);
+            for (UserDetailBean dbContact : mContactList)
+            {
+                if (number.trim().equals(dbContact.getPhone().trim()))
+                {
+                    count=1;
+                    break;
+                }
+            }
+            if (count==1)
+            {
+                bean.setStatus(1);
+                mDbList.add(bean);
+            }
+            else{
+                bean.setStatus(0);
+                nonUserList.add(bean);
+            }
+        }
+        mList.clear();
+        mList.addAll(mDbList);
+        mList.addAll(nonUserList);
+        mContactAdapter.notifyDataSetChanged();
     }
 }
