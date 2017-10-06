@@ -5,10 +5,17 @@ public class AppConstants {
 
     final public static int SPLASH_TIME_OUT = 1000;
     final public static String INTENT_PHONE_NUMBER = "number";
+
+
     final public static String USER_NODE = "users";
     final public static String USER_PHONE = "phone";
-    final public static String CHAT_NODE = "chats";
-    final public static String ROOM_ID_NODE = "chatRoom";
+    final public static String INBOX_NODE = "inbox";
+    final public static String CHAT_ROOM_NODE = "chatRoom";
+    final public static String MESSAGE_NODE = "messages";
+    final public static String ROOM_ID = "roomId";
+    final public static String MESSAGE_TIMESTAMP = "timestamp";
+
+
     final public static int TABS_COUNT = 3;
     final public static int STORAGE_REQUEST_CODE = 10;
     final public static int GALLERY_IMAGE_REQUEST_CODE = 11;
@@ -20,4 +27,5 @@ public class AppConstants {
     final public static String CONTACT_NAME = "name";
     final public static String MESSAGE = "message";
     final public static String USER = "user";
+    final public static String CURRENT_USER = "currentUser";
 }

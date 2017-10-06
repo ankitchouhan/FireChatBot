@@ -109,6 +109,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
+
             FilterResults results = new FilterResults();
             mList.clear();
             if (charSequence == null || charSequence.length()==0)
@@ -179,6 +180,15 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             displayName = displayName+data.charAt(0);
         }
         return displayName;
+    }
+
+    /**
+     * Method to update filter list.
+     * */
+    public void updateFilteredList()
+    {
+        mFilteredList.clear();
+        mFilteredList.addAll(mList);
     }
 
 

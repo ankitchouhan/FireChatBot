@@ -9,11 +9,11 @@
     <color name="silver">#C0C0C0</color>
     <color name="light_gray">#DCDCDC</color>
     <color name="facebook_button">#3b5998</color>
-
+<!--
     <color name="b"> #bbbbbb</color>
     <color name="c"> #fafafa</color>
-    <color name="e">#b5b5b5</color>
+    <color name="e">#b5b5b5</color>-->
     <color name="send">#9b9b9b</color>
-    <color name="g">#afafaf</color>
-    <color name="h">#EDE7f5</color>
+   <!-- <color name="g">#afafaf</color>
+    <color name="h">#EDE7f5</color>-->
 </resources>

@@ -39,8 +39,7 @@ public class MainActivity extends AppCompatActivity{
     private String mPhoneNumber;
     private List<ContactBean> mContactList;
     private OnContactsReceived mContactsReceived;
-    private TextView toolbarHeadingTv;
-    private ImageView toolbarEditIv,toolbarAddIv;
+    private UserDetailBean mCurrentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +56,9 @@ public class MainActivity extends AppCompatActivity{
     private void initViews() {
         tabLayoutTL = (TabLayout) findViewById(R.id.tl_tabs);
         ViewPager pagerVP = (ViewPager) findViewById(R.id.vp_pages);
-        Toolbar toolbarTb = (Toolbar) findViewById(R.id.tb_toolbar);
-        setSupportActionBar(toolbarTb);
         tabLayoutTL.setupWithViewPager(pagerVP);
-        if (toolbarTb!=null)
-        {
-            toolbarHeadingTv = toolbarTb.findViewById(R.id.tv_heading);
-            toolbarAddIv = toolbarTb.findViewById(R.id.iv_add);
-            toolbarEditIv = toolbarTb.findViewById(R.id.iv_edit);
-        }
         mPhoneNumber = getIntent().getStringExtra(AppConstants.INTENT_PHONE_NUMBER);
+        mCurrentUser = new UserDetailBean();
         ChatPagerAdapter pageAdapter = new ChatPagerAdapter(getSupportFragmentManager());
         pagerVP.setAdapter(pageAdapter);
         pagerVP.setOffscreenPageLimit(3);
@@ -83,15 +75,10 @@ public class MainActivity extends AppCompatActivity{
         //TextView text;
         for (int i = 0; i < tabIcons.length; i++) {
             TabLayout.Tab tab;
-            //tabLayoutTL.addTab(tabLayoutTL.newTab());
             if ((tab = tabLayoutTL.getTabAt(i)) != null) {
                 tab.setIcon(tabIcons[i]);
                 tab.setText(tabNames[i]);
             }
-            /*text = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
-            text.setText(tabNames[i]);
-            text.setCompoundDrawablesWithIntrinsicBounds(0, tabIcons[i], 0, 0);
-            tabLayoutTL.getTabAt(i).setCustomView(text);*/
         }
 
         tabLayoutTL.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -100,6 +87,12 @@ public class MainActivity extends AppCompatActivity{
                 if (tab.getCustomView() != null) {
                     TextView textView = tab.getCustomView().findViewById(R.id.tv_tab);
                     textView.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.purple));
+/*
+                    Fragment fragment = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.vp_pages + ":" + tabLayoutTL.getSelectedTabPosition());
+                    if (fragment instanceof ChatFragment)
+                        toolbarForChat();
+                    else if (fragment instanceof ContactsFragment)
+                        toolbarForContacts();*/
                 }
 
             }
@@ -198,7 +191,7 @@ public class MainActivity extends AppCompatActivity{
      * Method to start chat activity.
      */
     public void startChatActivity(ContactBean name) {
-        startActivity(new Intent(MainActivity.this, ChatActivity.class).putExtra(AppConstants.CONTACT_NAME, name));
+        startActivity(new Intent(MainActivity.this, ChatActivity.class).putExtra(AppConstants.CONTACT_NAME, name).putExtra(AppConstants.CURRENT_USER,mCurrentUser));
     }
 
     /**
@@ -213,7 +206,16 @@ public class MainActivity extends AppCompatActivity{
      */
     public void setUserDetails(UserDetailBean bean) {
         if (mContactsReceived!=null)
+        {
+            mCurrentUser.setuId(bean.getuId());
+            mCurrentUser.setPhone(bean.getPhone());
+            mCurrentUser.setFirstName(bean.getFirstName());
+            mCurrentUser.setLastName(bean.getLastName());
+            mCurrentUser.setLastSeen(bean.getLastSeen());
+            mCurrentUser.setProfileUri(bean.getProfileUri());
+            mCurrentUser.setStatus(bean.getStatus());
             mContactsReceived.getCurrentUser(bean);
+        }
     }
 
     /**
@@ -228,18 +230,7 @@ public class MainActivity extends AppCompatActivity{
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
         if (fragment instanceof ContactsFragment)
-        {
             mContactsReceived = (OnContactsReceived) fragment;
-            toolbarHeadingTv.setText(getString(R.string.contacts));
-            toolbarAddIv.setVisibility(View.VISIBLE);
-            toolbarEditIv.setVisibility(View.GONE);
-        }
-        else if (fragment instanceof ChatFragment)
-            {
-                toolbarHeadingTv.setText(getString(R.string.chat));
-                toolbarAddIv.setVisibility(View.GONE);
-                toolbarEditIv.setVisibility(View.VISIBLE);
-            }
     }
 
 }

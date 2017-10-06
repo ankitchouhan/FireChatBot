@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import static android.R.id.message;
@@ -42,6 +43,14 @@ public class AppUtils {
     {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         return connectivityManager.getActiveNetworkInfo() !=null;
+    }
+
+    /**
+     * Method to hide keyboard.
+     */
+    public static void hideKeyboard(View view,Context context) {
+        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 

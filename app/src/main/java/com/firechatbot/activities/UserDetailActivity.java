@@ -125,13 +125,11 @@ public class UserDetailActivity extends AppCompatActivity implements View.OnClic
         switch (view.getId()) {
             case R.id.b_done:
                 if (validateName()) {
-                    if (AppUtils.checkInternet(this))
-                    {
+                    if (AppUtils.checkInternet(this)) {
                         showViews();
                         AuthenticationUtils.getInstance().signInAnonymously(this);
-                    }
-                    else
-                        AppUtils.displayToast(this,getString(R.string.internet_unavailable));
+                    } else
+                        AppUtils.displayToast(this, getString(R.string.internet_unavailable));
                 }
                 break;
             case R.id.iv_profile_image:
@@ -185,7 +183,7 @@ public class UserDetailActivity extends AppCompatActivity implements View.OnClic
      * Method to start main activity.
      */
     public void startMainActivity() {
-        startActivity(new Intent(UserDetailActivity.this, MainActivity.class).putExtra(AppConstants.INTENT_PHONE_NUMBER,mPhoneNumber));
+        startActivity(new Intent(UserDetailActivity.this, MainActivity.class).putExtra(AppConstants.INTENT_PHONE_NUMBER, mPhoneNumber));
         finish();
     }
 
@@ -204,18 +202,10 @@ public class UserDetailActivity extends AppCompatActivity implements View.OnClic
     }
 
 
-    /**
-     * Method to hide keyboard.
-     */
-    public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         if (view.getId() == R.id.ll_user_details)
-            hideKeyboard(view);
+            AppUtils.hideKeyboard(view, this);
         return true;
     }
 }

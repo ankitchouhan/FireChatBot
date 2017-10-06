@@ -40,11 +40,14 @@
     <string name="add_friends">Add Friends</string>
     <string name="contacts">Contacts</string>
     <string name="chat">Chat</string>
+    <string name="settings">Settings</string>
     <string-array name="tabs">
         <item>Contacts</item>
         <item>Chat</item>
         <item>Settings</item>
     </string-array>
+
+    <string name="search_hint">Search</string>
 
     <string name="edit_text_digits">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
     <string name="permission_denied">Permission denied!</string>
@@ -53,5 +56,15 @@
 
     <string name="send">Send</string>
     <string name="invite_contact">Invite</string>
+
+    <string name="public_profile">public_profile</string>
+    <string name="email">email</string>
+
+    <string name="collapsed">Collapsed</string>
+    <string name="expanded">Expanded</string>
+    <string name="share_location">Share Location</string>
+    <string name="share_status">Do you want to send your location to </string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>

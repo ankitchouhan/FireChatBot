@@ -10,6 +10,9 @@ public class UserDetailBean implements Parcelable{
     private String firstName;
     private String lastName;
     private String profileUri;
+    private long lastSeen;
+    private int status;
+    private String uId;
 
     public UserDetailBean() {
     }
@@ -19,6 +22,9 @@ public class UserDetailBean implements Parcelable{
         firstName = in.readString();
         lastName = in.readString();
         profileUri = in.readString();
+        lastSeen = in.readLong();
+        status = in.readInt();
+        uId = in.readString();
     }
 
     public static final Creator<UserDetailBean> CREATOR = new Creator<UserDetailBean>() {
@@ -45,6 +51,30 @@ public class UserDetailBean implements Parcelable{
         this.phone = phone;
     }
 
+    public void setLastSeen(long lastSeen) {
+        this.lastSeen = lastSeen;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public void setuId(String uId) {
+        this.uId = uId;
+    }
+
+    public String getuId() {
+        return uId;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public long getLastSeen() {
+        return lastSeen;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -65,6 +95,7 @@ public class UserDetailBean implements Parcelable{
         return profileUri;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -76,5 +107,8 @@ public class UserDetailBean implements Parcelable{
         parcel.writeString(firstName);
         parcel.writeString(lastName);
         parcel.writeString(profileUri);
+        parcel.writeLong(lastSeen);
+        parcel.writeInt(status);
+        parcel.writeString(uId);
     }
 }

@@ -4,18 +4,50 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
+    <include
+        layout="@layout/include_toolbar"/>
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/d_search_size"
-        android:background="@color/silver"
-        android:padding="@dimen/d_contact_profile_name_padding">
+        android:layout_height="@dimen/search_view_height"
+        android:background="@color/send"
+        android:padding="@dimen/search_frame_padding">
 
-        <android.support.v7.widget.SearchView
+       <!-- <android.support.v7.widget.SearchView
             android:id="@+id/sv_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:queryBackground="@null"
-            android:background="@drawable/shape_search_view" />
+            android:background="@drawable/shape_search_view" />-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rl_search_parent"
+            android:clickable="true"
+            android:background="@drawable/shape_search_view">
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:inputType="text"
+                android:maxLines="1"
+                android:background="@null"
+                android:hint="@string/search_hint"
+                android:textSize="@dimen/s_search_text_size"
+                android:imeOptions="actionDone"/>
+            <ImageView
+                android:id="@+id/iv_search_icon"
+                android:layout_width="@dimen/search_icon_size"
+                android:layout_height="@dimen/search_icon_size"
+                android:layout_toStartOf="@id/et_search"
+                android:src="@drawable/ic_countrycode_search"
+                android:layout_alignTop="@id/et_search"
+                android:layout_marginEnd="@dimen/search_icon_marginEnd"
+                android:layout_marginTop="@dimen/search_icon_marginTop"/>
+        </RelativeLayout>
+
     </FrameLayout>
 
     <android.support.v4.widget.NestedScrollView
@@ -55,7 +87,7 @@
                     android:layout_marginTop="@dimen/d_contact_list_padding"
                     android:text="@string/add_friends"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/s_contact_profile_name_size" />
+                    android:textSize="@dimen/s_toolbar_heading_size" />
 
                 <TextView
                     android:id="@+id/tv_phone"

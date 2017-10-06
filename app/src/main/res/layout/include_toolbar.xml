@@ -7,7 +7,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/tb_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="@dimen/d_toolbar_height">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -52,8 +52,8 @@
 
             <ImageView
                 android:id="@+id/iv_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/d_toolbar_add_size"
+                android:layout_height="@dimen/d_toolbar_add_size"
                 android:src="@drawable/ic_add"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"

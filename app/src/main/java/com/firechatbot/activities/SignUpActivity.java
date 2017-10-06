@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -34,7 +35,7 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
-public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
+public class SignUpActivity extends AppCompatActivity implements View.OnClickListener,View.OnTouchListener {
 
     private Spinner spinner;
     private LinearLayout layoutLL;
@@ -72,6 +73,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         termsTv.setText(termsSpan);
         findViewById(R.id.b_verify).setOnClickListener(this);
         findViewById(R.id.f_sign_up_facebook).setOnClickListener(this);
+        layoutLL.setOnTouchListener(this);
     }
 
     /**
@@ -157,7 +159,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     AppUtils.snackBar(layoutLL, getString(R.string.enter_valid_number));
                 break;
             case R.id.f_sign_up_facebook:
-                LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"));
+                LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList(getString(R.string.public_profile), getString(R.string.email)));
                 break;
         }
     }
@@ -216,5 +218,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        if (view.getId()==R.id.ll_sign_up)
+            AppUtils.hideKeyboard(view,this);
+        return false;
     }
 }

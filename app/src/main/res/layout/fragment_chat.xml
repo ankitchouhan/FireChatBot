@@ -6,39 +6,41 @@
     tools:context="com.firechatbot.fragments.ChatFragment">
 
 
+    <include layout="@layout/include_toolbar" />
+
     <ImageView
         android:id="@+id/iv_chat_image_sample"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_chat_icon"
-        android:layout_marginTop="@dimen/d_profile_icon_size"/>
+        android:layout_marginTop="@dimen/d_profile_icon_size"
+        android:src="@drawable/ic_chat_icon" />
 
     <TextView
         android:id="@+id/tv_add_chat_sample"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/dont_see_what_looking"
-        android:textSize="@dimen/s_create_profile_size"
+        android:paddingBottom="@dimen/d_verify_button_marginTop"
         android:paddingTop="@dimen/d_welcome_message_paddingTop"
-        android:paddingBottom="@dimen/d_verify_button_marginTop"/>
-    
+        android:text="@string/dont_see_what_looking"
+        android:textSize="@dimen/s_create_profile_size" />
+
     <Button
         android:id="@+id/b_add_friend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_friends"
-        android:textColor="@color/white"
-        android:textAllCaps="false"
-        android:background="@drawable/shape_button_round"
+        android:layout_marginEnd="@dimen/d_sign_up_padding"
         android:layout_marginStart="@dimen/d_sign_up_padding"
-        android:layout_marginEnd="@dimen/d_sign_up_padding"/>
+        android:background="@drawable/shape_button_round"
+        android:text="@string/add_friends"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_chats"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_chats"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
 </LinearLayout>

@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.firechatbot.fragments.ChatFragment;
 import com.firechatbot.fragments.ContactsFragment;
+import com.firechatbot.fragments.SettingsFragment;
 import com.firechatbot.utils.AppConstants;
 
 public class ChatPagerAdapter extends FragmentStatePagerAdapter{
@@ -24,6 +25,8 @@ public class ChatPagerAdapter extends FragmentStatePagerAdapter{
                 return new ContactsFragment();
             case 1:
                 return new ChatFragment();
+            case 2:
+                return new SettingsFragment();
         }
         return new ChatFragment();
     }

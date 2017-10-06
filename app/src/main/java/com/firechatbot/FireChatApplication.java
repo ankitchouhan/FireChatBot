@@ -21,7 +21,7 @@ public class FireChatApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        setDefaultFont("MONOSPACE","Roboto-Light.ttf");
+        setDefaultFont("SERIF","SanFranciscoDisplay-Bold.otf");
 
     }
 
