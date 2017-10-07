@@ -75,7 +75,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         findViewById(R.id.f_sign_up_facebook).setOnClickListener(this);
         layoutLL.setOnTouchListener(this);
     }
-
     /**
      * Method to setup facebook login.
      */

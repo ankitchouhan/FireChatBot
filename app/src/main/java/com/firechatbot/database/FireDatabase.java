@@ -3,7 +3,6 @@ package com.firechatbot.database;
 
 import android.app.Activity;
 import android.net.Uri;
-import android.util.Log;
 
 import com.firechatbot.activities.ChatActivity;
 import com.firechatbot.activities.MainActivity;
@@ -12,6 +11,7 @@ import com.firechatbot.beans.ChatRoomBean;
 import com.firechatbot.beans.MessageBean;
 import com.firechatbot.beans.UserDetailBean;
 import com.firechatbot.utils.AppConstants;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,10 +28,12 @@ public class FireDatabase {
 
     private static FireDatabase mInstance;
     private DatabaseReference mReference;
+    private ChildEventListener mChildListener;
 
     private FireDatabase() {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         mReference = FirebaseDatabase.getInstance().getReference();
+        mReference.keepSynced(true);
     }
 
     /**
@@ -227,8 +229,8 @@ public class FireDatabase {
     {
         String chatRoomId = mReference.child(AppConstants.CHAT_ROOM_NODE).push().getKey();
         ChatRoomBean bean = new ChatRoomBean();
-        bean.setSenderId(senderId);
-        bean.setReceiverId(receiverId);
+        bean.setUser1(senderId);
+        bean.setUser2(receiverId);
         mReference.child(AppConstants.CHAT_ROOM_NODE).child(chatRoomId).setValue(bean);
         if (status==0)
         {
@@ -239,11 +241,12 @@ public class FireDatabase {
         {
             createReceiverNode(chatRoomId,senderId,receiverId);
             createReceiverNode(chatRoomId,receiverId,senderId);
+            ((ChatActivity)activity).getChatRoomId(chatRoomId);
         }
     }
 
     /**
-     * Method to create sender node in inbox.
+     * Method to create sender node in inbox node.
      * */
     private void createSenderNodeInInbox(String chatRoomId,String senderId,String receiverId, Activity activity)
     {
@@ -252,7 +255,7 @@ public class FireDatabase {
     }
 
     /**
-     * Method to create receiver node in inbox.
+     * Method to create receiver node in inbox node.
      * */
     private void createReceiverNodeInInbox(String chatRoomId,String receiverId,String senderId)
     {
@@ -261,7 +264,7 @@ public class FireDatabase {
     }
 
     /**
-     * Method to create receiver node.
+     * Method to create receiver node if only sender exist.
      * */
     private void createReceiverNode(String chatRoomId,String senderId,String receiverId)
     {
@@ -280,46 +283,67 @@ public class FireDatabase {
 
 
     /**
-     * Method to create inbox with room id.
+     * Method to get chatRoomId from inbox.
      */
-    public void createInbox(final String senderId, final String receiverId) {
-        Query query = mReference.child(AppConstants.INBOX_NODE).orderByChild(senderId).equalTo(senderId);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
-                    Query query1 = mReference.child(AppConstants.INBOX_NODE).child(senderId).orderByChild(receiverId).equalTo(receiverId);
-                    query1.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.getValue()!=null)
-                            {
-
-                            }
-                            else {
-
-                            }
+    public void getChatRoomId(String senderId, String receiverId, final Activity activity)
+    {
+        mReference.child(AppConstants.INBOX_NODE).child(senderId).child(receiverId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getValue()!=null)
+                        {
+                            getAllMessages((String) dataSnapshot.getValue(),activity);
                         }
+                    }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-                        }
-                    });
-                }
-                else {
-                    //createChatRoom(senderId,receiverId);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
+                    }
+                });
     }
 
 
+    /**
+     * Method to get all messages.
+     * */
+    private void getAllMessages(String chatRoomId, final Activity activity) {
+        final List<MessageBean> messagesList = new ArrayList<>();
+        mChildListener = mReference.child(AppConstants.MESSAGE_NODE).child(chatRoomId)
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        messagesList.add(dataSnapshot.getValue(MessageBean.class));
+                        ((ChatActivity)activity).getAllMessages(messagesList);
+                    }
 
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
+    /**
+     * Method to remove child added listener.
+     * */
+    public void removeChildListener()
+    {
+       // mReference.child(AppConstants.MESSAGE_NODE).removeEventListener(mChildListener);
+    }
 }

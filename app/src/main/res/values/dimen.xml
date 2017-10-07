@@ -75,6 +75,11 @@
     <dimen name="s_dialog_yes_size">22sp</dimen>
     <dimen name="d_dialog_yes_padding">17dp</dimen>
     <dimen name="d_dialog_background">18dp</dimen>
+    <dimen name="d_200dp">200dp</dimen>
+    <dimen name="s_message_size">18sp</dimen>
+    <dimen name="d_message_padding">15dp</dimen>
+    <dimen name="d_message_sender_padding">8dp</dimen>
+    <dimen name="s_message_timestamp_size">14sp</dimen>
 
 
 </resources>

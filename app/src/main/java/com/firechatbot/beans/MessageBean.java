@@ -7,7 +7,7 @@ public class MessageBean {
 
     private String sender;
     private String message;
-    private Map<String,String> timestamp;
+    private Object timestamp;
     private String messageId;
     private int status;
     private String receiver;
@@ -17,7 +17,7 @@ public class MessageBean {
 
     }
 
-    public MessageBean(String sender,String message,String messageId,Map<String,String> timestamp,int status)
+    public MessageBean(String sender,String message,String messageId,Object timestamp,int status)
     {
         this.sender = sender;
         this.message = message;
@@ -42,7 +42,7 @@ public class MessageBean {
         this.status = status;
     }
 
-    public void setTimestamp(Map<String,String> timestamp) {
+    public void setTimestamp(Object timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -66,7 +66,7 @@ public class MessageBean {
         return status;
     }
 
-    public Map<String, String> getTimestamp() {
+    public Object getTimestamp() {
         return timestamp;
     }
 

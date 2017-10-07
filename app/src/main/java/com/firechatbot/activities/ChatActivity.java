@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -21,13 +22,17 @@ import android.widget.TextView;
 
 import com.firechatbot.R;
 import com.firechatbot.adapters.BottomGalleryAdapter;
+import com.firechatbot.adapters.MessagesAdapter;
 import com.firechatbot.beans.ContactBean;
+import com.firechatbot.beans.MessageBean;
 import com.firechatbot.beans.UserDetailBean;
 import com.firechatbot.database.FireDatabase;
 import com.firechatbot.utils.AppConstants;
 import com.firechatbot.utils.AppUtils;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ChatActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher, View.OnTouchListener, SlidingUpPanelLayout.PanelSlideListener {
@@ -40,9 +45,12 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView toolbarBackIv, toolbarCallIv;
     private ContactBean mContact;
     private UserDetailBean mCurrentUser;
-    private String mReceiverId;
-    private RecyclerView bottomSheetRv;
+    private String mReceiverId,mChatRoomId;
+    private RecyclerView bottomSheetRv,messageRv;
     private BottomGalleryAdapter mGalleryAdapter;
+    private MessagesAdapter mMessageAdapter;
+    private List<MessageBean> mMessageList;
+    private boolean mCheckMessages = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +77,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         smileIv = (ImageView) findViewById(R.id.iv_smile);
         locationIv = (ImageView) findViewById(R.id.iv_location);
         cameraIv = (ImageView) findViewById(R.id.iv_camera);
+        messageRv = (RecyclerView) findViewById(R.id.rv_chat_message);
         // bottomSheetRv = (RecyclerView) findViewById(R.id.rv_bottom_gallery);
         //SlidingUpPanelLayout slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         messageEt.setOnClickListener(this);
@@ -95,6 +104,11 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         toolbarHeadingTv.setText(mContact.getName());
         toolbarCallIv.setVisibility(View.VISIBLE);
         toolbarBackIv.setVisibility(View.VISIBLE);
+        mMessageList = new ArrayList<>();
+        mMessageAdapter = new MessagesAdapter(mMessageList,mCurrentUser);
+        messageRv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        messageRv.setAdapter(mMessageAdapter);
+        FireDatabase.getInstance().getReceiverDetails(this, filterContacts(mContact.getPhone()));
         //bottomSheetRv.setLayoutManager(new GridLayoutManager(this, GridLayoutManager.DEFAULT_SPAN_COUNT));
         // mGalleryAdapter = new BottomGalleryAdapter();
 
@@ -195,7 +209,15 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
      */
     public void setReceiverDetails(UserDetailBean bean) {
         mReceiverId = bean.getuId();
-        checkReceiverInInbox(mReceiverId);
+        if (mCheckMessages)
+        {
+            FireDatabase.getInstance().getChatRoomId(mCurrentUser.getuId(),mReceiverId,this);
+            mCheckMessages = false;
+        }
+        else
+        {
+            checkReceiverInInbox(mReceiverId);
+        }
     }
 
     /**
@@ -211,8 +233,27 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
      */
     public void getChatRoomId(String chatRoomId) {
         if (chatRoomId != null)
+        {
+            mChatRoomId = chatRoomId;
             FireDatabase.getInstance().createMessageNodeInDatabase(messageEt.getText().toString().trim(), chatRoomId, mCurrentUser.getuId());
+        }
         messageEt.setText("");
     }
 
+    /**
+     * Method to get all messages.
+     * */
+    public void getAllMessages(List<MessageBean> list)
+    {
+        mMessageList.clear();
+        mMessageList.addAll(list);
+        messageRv.smoothScrollToPosition(mMessageList.size()-1);
+        mMessageAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onDestroy() {
+        FireDatabase.getInstance().removeChildListener();
+        super.onDestroy();
+    }
 }
