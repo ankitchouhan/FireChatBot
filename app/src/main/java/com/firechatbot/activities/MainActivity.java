@@ -13,10 +13,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.firechatbot.R;
@@ -24,7 +20,6 @@ import com.firechatbot.adapters.ChatPagerAdapter;
 import com.firechatbot.beans.ContactBean;
 import com.firechatbot.beans.UserDetailBean;
 import com.firechatbot.database.FireDatabase;
-import com.firechatbot.fragments.ChatFragment;
 import com.firechatbot.fragments.ContactsFragment;
 import com.firechatbot.interfaces.OnContactsReceived;
 import com.firechatbot.utils.AppConstants;
@@ -84,25 +79,25 @@ public class MainActivity extends AppCompatActivity{
         tabLayoutTL.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getCustomView() != null) {
+               /* if (tab.getCustomView() != null) {
                     TextView textView = tab.getCustomView().findViewById(R.id.tv_tab);
                     textView.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.purple));
-/*
+*//*
                     Fragment fragment = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.vp_pages + ":" + tabLayoutTL.getSelectedTabPosition());
                     if (fragment instanceof ChatFragment)
                         toolbarForChat();
                     else if (fragment instanceof ContactsFragment)
-                        toolbarForContacts();*/
-                }
+                        toolbarForContacts();*//*
+                }*/
 
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                if (tab.getCustomView() != null) {
+               /* if (tab.getCustomView() != null) {
                     TextView textView = tab.getCustomView().findViewById(R.id.tv_tab);
                     textView.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.silver));
-                }
+                }*/
             }
 
             @Override

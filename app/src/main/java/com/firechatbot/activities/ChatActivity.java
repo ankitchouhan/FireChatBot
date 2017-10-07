@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -29,13 +28,12 @@ import com.firechatbot.beans.UserDetailBean;
 import com.firechatbot.database.FireDatabase;
 import com.firechatbot.utils.AppConstants;
 import com.firechatbot.utils.AppUtils;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ChatActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher, View.OnTouchListener, SlidingUpPanelLayout.PanelSlideListener {
+public class ChatActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher, View.OnTouchListener {
 
     private EditText messageEt;
     private TextView sendTv;
@@ -46,7 +44,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private ContactBean mContact;
     private UserDetailBean mCurrentUser;
     private String mReceiverId,mChatRoomId;
-    private RecyclerView bottomSheetRv,messageRv;
+    private RecyclerView messageRv;
     private BottomGalleryAdapter mGalleryAdapter;
     private MessagesAdapter mMessageAdapter;
     private List<MessageBean> mMessageList;
@@ -78,8 +76,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         locationIv = (ImageView) findViewById(R.id.iv_location);
         cameraIv = (ImageView) findViewById(R.id.iv_camera);
         messageRv = (RecyclerView) findViewById(R.id.rv_chat_message);
-        // bottomSheetRv = (RecyclerView) findViewById(R.id.rv_bottom_gallery);
-        //SlidingUpPanelLayout slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         messageEt.setOnClickListener(this);
         sendTv.setOnClickListener(this);
         smileIv.setOnClickListener(this);
@@ -90,7 +86,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         messageEt.addTextChangedListener(this);
         sendTv.setOnTouchListener(this);
         parentLL.setOnTouchListener(this);
-        // slidingUpPanelLayout.addPanelSlideListener(this);
     }
 
     /**
@@ -105,13 +100,10 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         toolbarCallIv.setVisibility(View.VISIBLE);
         toolbarBackIv.setVisibility(View.VISIBLE);
         mMessageList = new ArrayList<>();
-        mMessageAdapter = new MessagesAdapter(mMessageList,mCurrentUser);
+        mMessageAdapter = new MessagesAdapter(mMessageList,mCurrentUser,this);
         messageRv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         messageRv.setAdapter(mMessageAdapter);
         FireDatabase.getInstance().getReceiverDetails(this, filterContacts(mContact.getPhone()));
-        //bottomSheetRv.setLayoutManager(new GridLayoutManager(this, GridLayoutManager.DEFAULT_SPAN_COUNT));
-        // mGalleryAdapter = new BottomGalleryAdapter();
-
     }
 
     @Override
@@ -127,6 +119,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.iv_back:
                 finish();
+                break;
 
             case R.id.iv_location:
                 Dialog dialog = new Dialog(this);
@@ -136,6 +129,9 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 TextView textView = dialog.findViewById(R.id.tv_share_status);
                 textView.setText(getString(R.string.share_status) + " " + mContact.getName() + "?");
                 dialog.show();
+                break;
+            case R.id.iv_camera:
+                openBottomGallery();
                 break;
         }
     }
@@ -173,21 +169,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
-    @Override
-    public void onPanelSlide(View panel, float slideOffset) {
-
-    }
-
-    @Override
-    public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-        if (newState.name().equalsIgnoreCase(getString(R.string.collapsed))) {
-            //action when collapsed
-
-        } else if (newState.name().equalsIgnoreCase(getString(R.string.expanded))) {
-            //action when expanded
-        }
-    }
-
 
     /**
      * Method to filter contact.
@@ -215,9 +196,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             mCheckMessages = false;
         }
         else
-        {
             checkReceiverInInbox(mReceiverId);
-        }
     }
 
     /**
@@ -247,7 +226,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     {
         mMessageList.clear();
         mMessageList.addAll(list);
-        messageRv.smoothScrollToPosition(mMessageList.size()-1);
+        messageRv.scrollToPosition(mMessageList.size()-1);
         mMessageAdapter.notifyDataSetChanged();
     }
 
@@ -255,5 +234,12 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         FireDatabase.getInstance().removeChildListener();
         super.onDestroy();
+    }
+
+    /**
+     * Method to open bottom gallery.
+     * */
+    private void openBottomGallery() {
+        
     }
 }

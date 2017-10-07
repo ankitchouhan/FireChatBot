@@ -67,4 +67,17 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
+    <string name="month_ago"> month ago</string>
+    <string name="months_ago"> months ago</string>
+    <string name="year_ago"> year ago</string>
+    <string name="week_ago"> week ago</string>
+    <string name="weeks_ago"> weeks ago</string>
+    <string name="day_ago"> day ago</string>
+    <string name="days_ago"> days ago</string>
+    <string name="hour_ago"> hour ago</string>
+    <string name="hours_ago"> hours ago</string>
+    <string name="min_ago"> min ago</string>
+    <string name="mins_ago"> mins ago</string>
+    <string name="just_now">Just now</string>
+    <string name="secs_ago"> secs ago</string>
 </resources>

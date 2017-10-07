@@ -293,7 +293,7 @@ public class FireDatabase {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot.getValue()!=null)
                         {
-                            getAllMessages((String) dataSnapshot.getValue(),activity);
+                            getAllMessage((String) dataSnapshot.getValue(),activity);
                         }
                     }
 
@@ -308,7 +308,7 @@ public class FireDatabase {
     /**
      * Method to get all messages.
      * */
-    private void getAllMessages(String chatRoomId, final Activity activity) {
+    private void getAllMessage(String chatRoomId, final Activity activity) {
         final List<MessageBean> messagesList = new ArrayList<>();
         mChildListener = mReference.child(AppConstants.MESSAGE_NODE).child(chatRoomId)
                 .addChildEventListener(new ChildEventListener() {

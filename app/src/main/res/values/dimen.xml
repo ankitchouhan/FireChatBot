@@ -80,6 +80,6 @@
     <dimen name="d_message_padding">15dp</dimen>
     <dimen name="d_message_sender_padding">8dp</dimen>
     <dimen name="s_message_timestamp_size">14sp</dimen>
-
-
+    <dimen name="d_message_timestamp_padding">8dp</dimen>
+    <dimen name="d_300dp">300dp</dimen>
 </resources>
