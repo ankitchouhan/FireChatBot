@@ -1,7 +1,7 @@
 package com.firechatbot.beans;
 
 
-import java.util.Map;
+
 
 public class MessageBean {
 
@@ -11,14 +11,16 @@ public class MessageBean {
     private String messageId;
     private int status;
     private String receiver;
+    private int messageType;
 
     public MessageBean()
     {
 
     }
 
-    public MessageBean(String sender,String message,String messageId,Object timestamp,int status)
+    public MessageBean(int messageType,String sender,String message,String messageId,Object timestamp,int status)
     {
+        this.messageType = messageType;
         this.sender = sender;
         this.message = message;
         this.messageId = messageId;
@@ -48,6 +50,14 @@ public class MessageBean {
 
     public void setMessageId(String messageId) {
         this.messageId = messageId;
+    }
+
+    public void setMessageType(int messageType) {
+        this.messageType = messageType;
+    }
+
+    public int getMessageType() {
+        return messageType;
     }
 
     public String getSender() {

@@ -2,27 +2,64 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fresco="http://schemas.android.com/tools"
-    android:orientation="horizontal"
-    android:padding="@dimen/d_welcome_marginTop">
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/sdv_profile_icon"
-        android:layout_width="@dimen/d_profile_icon_size"
-        android:layout_height="@dimen/d_profile_icon_size"
-        app:placeholderImage="@drawable/ic_profile_avatar"
-        fresco:scaleType="centerCrop"/>
-
-    <TextView
-        android:id="@+id/tv_chat_user_name"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_friends"
-        android:textColor="@color/black"
-        android:textSize="@dimen/s_welcome_message_size"
-        android:layout_marginStart="@dimen/row_chat_name_marginStart"
-        android:paddingTop="@dimen/d_country_spinner_marginTop"
-        android:maxLines="1"/>
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/d_welcome_marginTop"
+        android:paddingEnd="@dimen/d_welcome_marginTop"
+        android:paddingTop="@dimen/d_row_chat_view_marginTop">
 
+        <TextView
+            android:id="@+id/tv_profile_icon"
+            android:layout_width="@dimen/d_profile_icon_size"
+            android:layout_height="@dimen/d_profile_icon_size"
+            android:background="@drawable/shape_contact_icon"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/s_contact_profile_name_size"
+            android:textStyle="bold" />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_profile_icon"
+            android:layout_width="@dimen/d_profile_icon_size"
+            android:layout_height="@dimen/d_profile_icon_size"
+            android:background="@drawable/ic_profile_avatar"
+            android:visibility="gone"
+            fresco:roundAsCircle="true"
+            fresco:actualImageScaleType="centerCrop"/>
+
+        <TextView
+            android:id="@+id/tv_chat_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/d_row_chat_last_message_paddingTop"
+            android:layout_marginStart="@dimen/d_row_chat_last_message_marginStart"
+            android:maxLines="1"
+            android:text="@string/add_friends"
+            android:textColor="@color/black"
+            android:textSize="@dimen/s_welcome_message_size" />
+        <TextView
+            android:id="@+id/tv_last_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_chat_user_name"
+            android:layout_alignStart="@id/tv_chat_user_name"
+            android:paddingTop="@dimen/d_row_chat_last_message_paddingTop"
+            android:maxLines="1"
+            android:layout_marginEnd="@dimen/d_row_chat_last_message_marginEnd"/>
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d_view"
+        android:background="@color/send"
+        android:layout_marginTop="@dimen/d_row_chat_view_marginTop"
+        android:layout_marginStart="@dimen/d_row_chat_view_marginStart"/>
 </LinearLayout>

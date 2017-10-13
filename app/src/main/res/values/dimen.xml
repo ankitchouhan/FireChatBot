@@ -38,6 +38,9 @@
 
     <dimen name="d_toolbar_height">70dp</dimen>
     <dimen name="s_toolbar_heading_size">20sp</dimen>
+    <dimen name="d_toolbar_heading_padding">10dp</dimen>
+    <dimen name="d_toolbar_heading_padding_bottom">2dp</dimen>
+    <dimen name="s_toolbar_status_size">12sp</dimen>
     <dimen name="d_invite_image_marginStart">20dp</dimen>
 
     <dimen name="row_chat_name_marginStart">12dp</dimen>
@@ -68,11 +71,12 @@
     <dimen name="d_row_gallery_size">100dp</dimen>
 
     <dimen name="d_dialog_layout_padding">28dp</dimen>
-    <dimen name="s_dialog_share_location_size">23sp</dimen>
-    <dimen name="d_dialog_share_padding">30dp</dimen>
+    <dimen name="d_dialog_layout_marginStart">30dp</dimen>
+    <dimen name="s_dialog_share_location_size">22sp</dimen>
+    <dimen name="d_dialog_share_padding">27dp</dimen>
     <dimen name="d_dialog_share_status_padding">15dp</dimen>
-    <dimen name="s_dialog_share_status_size">18sp</dimen>
-    <dimen name="s_dialog_yes_size">22sp</dimen>
+    <dimen name="s_dialog_share_status_size">17sp</dimen>
+    <dimen name="s_dialog_yes_size">20sp</dimen>
     <dimen name="d_dialog_yes_padding">17dp</dimen>
     <dimen name="d_dialog_background">18dp</dimen>
     <dimen name="d_200dp">200dp</dimen>
@@ -81,5 +85,16 @@
     <dimen name="d_message_sender_padding">8dp</dimen>
     <dimen name="s_message_timestamp_size">14sp</dimen>
     <dimen name="d_message_timestamp_padding">8dp</dimen>
-    <dimen name="d_300dp">300dp</dimen>
+    <dimen name="d_300dp">250dp</dimen>
+
+    <dimen name="d_row_chat_view_marginTop">8dp</dimen>
+    <dimen name="d_row_chat_view_marginStart">81dp</dimen>
+
+    <dimen name="d_row_chat_last_message_marginStart">60dp</dimen>
+    <dimen name="d_row_chat_last_message_paddingTop">5dp</dimen>
+    <dimen name="d_row_chat_last_message_marginEnd">10dp</dimen>
+    <dimen name="d_row_gallery_marginTop">8dp</dimen>
+    <dimen name="d_row_receiver_message_image_size">250dp</dimen>
+    <dimen name="d_row_receiver_message_image_marginTop">8dp</dimen>
+
 </resources>

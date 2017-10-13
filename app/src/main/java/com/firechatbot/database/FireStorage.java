@@ -6,12 +6,14 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
+import com.firechatbot.activities.ChatActivity;
 import com.firechatbot.activities.UserDetailActivity;
 import com.firechatbot.utils.AppConstants;
 import com.firechatbot.utils.AppUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -41,7 +43,8 @@ public class FireStorage {
      * Method to upload user profile image and get url.
      */
     public void uploadUserImage(Uri file, String phoneNumber, final Activity activity) {
-        UploadTask uploadTask = mStorageReference.child(AppConstants.USER_NODE).child(phoneNumber).child(AppConstants.USER_PROFILE_IMAGE + file.getLastPathSegment()).putFile(file);
+        UploadTask uploadTask = mStorageReference.child(AppConstants.USER_NODE).child(phoneNumber)
+                .child(AppConstants.USER_PROFILE_IMAGE + file.getLastPathSegment()).putFile(file);
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -58,10 +61,42 @@ public class FireStorage {
         });
     }
 
-   /* *//**
-     * Method to upload user profile image from fb.
-     *//*
-    public void uploadFbImage(Uri file, String userId, final Activity activity) {
+
+    /**
+     * Method to upload image during user chat.
+     * */
+    public void uploadImageDuringChat(Uri file, final String chatRoomId, final Activity activity)
+    {
+        UploadTask uploadTask = mStorageReference.child(AppConstants.MESSAGE_NODE)
+                .child(AppConstants.USER_PROFILE_IMAGE + file.getLastPathSegment()).putFile(file);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                if (taskSnapshot.getMetadata()!=null)
+                {
+                    Uri downloadUrl = taskSnapshot.getMetadata().getDownloadUrl();
+                    ((ChatActivity)activity).getImageUrlToUpload(downloadUrl,chatRoomId);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                AppUtils.displayToast(activity,e.getMessage());
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+
+            }
+        });
+    }
+
+
+
+    /**
+     *     Method to upload user profile image from fb.
+     */
+   /* public void uploadFbImage(Uri file, String userId, final Activity activity) {
         try {
             InputStream stream = new FileInputStream(new File(String.valueOf(file)));
             UploadTask uploadTask = mStorageReference.child(AppConstants.USER_NODE).child(userId).child(AppConstants.USER_PROFILE_IMAGE + file.getLastPathSegment()).putStream(stream);

@@ -8,10 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.firechatbot.R;
 import com.firechatbot.beans.MessageBean;
 import com.firechatbot.beans.UserDetailBean;
+import com.stfalcon.frescoimageviewer.ImageViewer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -49,13 +52,40 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         switch (getItemViewType(position)) {
             case SENDER:
                 SenderViewHolder senderViewHolder = (SenderViewHolder) holder;
-                senderViewHolder.sendMessageTv.setText(mList.get(position).getMessage());
+                if (mList.get(position).getMessageType()==0)
+                {
+                    senderViewHolder.sendMessageTv.setVisibility(View.VISIBLE);
+                    senderViewHolder.sendMessageTv.setText(mList.get(position).getMessage());
+                    senderViewHolder.senderImageSdv.setVisibility(View.GONE);
+                }
+                else if (mList.get(position).getMessageType()==1)
+                {
+                    senderViewHolder.senderImageSdv.setVisibility(View.VISIBLE);
+                    senderViewHolder.senderImageSdv.setImageURI(mList.get(position).getMessage());
+                    senderViewHolder.sendMessageTv.setVisibility(View.GONE);
+                }
                 senderViewHolder.timeStampTv.setText(convertTimestampIntoDates((Long) mList.get(position).getTimestamp()));
+                if (mList.get(position).getStatus()>0)
+                    senderViewHolder.sentStatusTv.setText(mContext.getString(R.string.seen));
+                else
+                    senderViewHolder.sentStatusTv.setText(mContext.getString(R.string.sent));
                 break;
             case RECEIVER:
                 ReceiverViewHolder receiverViewHolder = (ReceiverViewHolder) holder;
-                receiverViewHolder.timeStampTv.setText(convertTimestampIntoDates((Long) mList.get(position).getTimestamp()));
                 receiverViewHolder.receiveMessageTv.setText(mList.get(position).getMessage());
+                if (mList.get(position).getMessageType()==0)
+                {
+                    receiverViewHolder.receiveMessageTv.setVisibility(View.VISIBLE);
+                    receiverViewHolder.receiveMessageTv.setText(mList.get(position).getMessage());
+                    receiverViewHolder.receiverImageSdv.setVisibility(View.GONE);
+                }
+                else if (mList.get(position).getMessageType()==1)
+                {
+                    receiverViewHolder.receiverImageSdv.setVisibility(View.VISIBLE);
+                    receiverViewHolder.receiverImageSdv.setImageURI(mList.get(position).getMessage());
+                    receiverViewHolder.receiveMessageTv.setVisibility(View.GONE);
+                }
+                receiverViewHolder.timeStampTv.setText(convertTimestampIntoDates((Long) mList.get(position).getTimestamp()));
                 break;
         }
         /*if (mList.get(position).getMessage() != null)
@@ -78,12 +108,25 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
      * Sender view holder class.
      */
     private class SenderViewHolder extends RecyclerView.ViewHolder {
-        private TextView sendMessageTv, timeStampTv;
+        private TextView sendMessageTv, timeStampTv, sentStatusTv;
+        private SimpleDraweeView senderImageSdv;
 
         SenderViewHolder(View itemView) {
             super(itemView);
             sendMessageTv = itemView.findViewById(R.id.tv_sender_message);
             timeStampTv = itemView.findViewById(R.id.tv_message_timestamp);
+            sentStatusTv = itemView.findViewById(R.id.tv_sent_status);
+            senderImageSdv = itemView.findViewById(R.id.sdv_sender_chat_message_image);
+            senderImageSdv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mList != null && mList.size() > 0) {
+                        List<String> list = new ArrayList<>();
+                        list.add(mList.get(getAdapterPosition()).getMessage());
+                        new ImageViewer.Builder(mContext, list).show();
+                    }
+                }
+            });
         }
     }
 
@@ -92,11 +135,23 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
      */
     private class ReceiverViewHolder extends RecyclerView.ViewHolder {
         private TextView receiveMessageTv, timeStampTv;
+        private SimpleDraweeView receiverImageSdv;
 
         ReceiverViewHolder(View itemView) {
             super(itemView);
             receiveMessageTv = itemView.findViewById(R.id.tv_receiver_message);
             timeStampTv = itemView.findViewById(R.id.tv_message_timestamp);
+            receiverImageSdv = itemView.findViewById(R.id.sdv_chat_message_image);
+            receiverImageSdv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mList != null && mList.size() > 0) {
+                        List<String> list = new ArrayList<>();
+                        list.add(mList.get(getAdapterPosition()).getMessage());
+                        new ImageViewer.Builder(mContext, list).show();
+                    }
+                }
+            });
         }
     }
 
@@ -105,8 +160,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
      */
     private String convertTimestampIntoDates(long createdDateInMS) {
 
-        return (String) android.text.format.DateFormat.format("hh:mm a",createdDateInMS);
-/*
+        //return (String) android.text.format.DateFormat.format("hh:mm a",createdDateInMS);
         long currentDateInMS = System.currentTimeMillis();
         long difference = currentDateInMS - createdDateInMS;
         if (difference == 0)
@@ -177,6 +231,6 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             result = null;
         }
 
-        return result;*/
+        return result;
     }
 }

@@ -22,7 +22,9 @@
         <item name="android:textSize">@dimen/s_welcome_message_size</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:inputType">textCapWords</item>
+        <item name="android:singleLine">true</item>
         <item name="android:digits">@string/edit_text_digits</item>
+        <!--<item name="android:imeOptions">actionNext</item>-->
         <item name="android:maxLength">25</item>
     </style>
 

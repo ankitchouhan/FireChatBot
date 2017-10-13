@@ -10,7 +10,10 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         android:layout_weight="1"
-        android:padding="@dimen/d_dialog_layout_padding">
+        android:layout_marginStart="@dimen/d_dialog_layout_marginStart"
+        android:layout_marginEnd="@dimen/d_dialog_layout_marginStart"
+        android:paddingTop="@dimen/d_dialog_layout_padding"
+        android:paddingBottom="@dimen/d_dialog_layout_padding">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,6 +33,7 @@
             android:layout_height="wrap_content"
             android:text="@string/share_status"
             android:textColor="@color/black"
+            android:maxLines="3"
             android:padding="@dimen/d_dialog_share_status_padding"
             android:gravity="center"
             android:textSize="@dimen/s_dialog_share_status_size"/>

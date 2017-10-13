@@ -11,6 +11,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -82,8 +84,7 @@ public class UserDetailActivity extends AppCompatActivity implements View.OnClic
             mFbPic = Uri.parse(mBean.getProfileUri());
         }
     }
-
-
+    
     /**
      * Method to request permission.
      */

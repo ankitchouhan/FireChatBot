@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/d_message_sender_padding"
     android:gravity="end"
-    android:orientation="vertical"
-    android:layout_margin="@dimen/d_message_sender_padding">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_message_timestamp"
@@ -12,8 +13,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="@dimen/d_message_timestamp_padding"
-        android:textSize="@dimen/s_message_timestamp_size"/>
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:textSize="@dimen/s_message_timestamp_size" />
+
+    <TextView
         android:id="@+id/tv_sender_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,7 +24,32 @@
         android:maxWidth="@dimen/d_200dp"
         android:padding="@dimen/d_message_padding"
         android:textColor="@color/black"
-        android:textSize="@dimen/s_message_size">
+        android:textSize="@dimen/s_message_size" />
 
-    </TextView>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_sender_chat_message_image"
+            android:layout_width="@dimen/d_row_receiver_message_image_size"
+            android:layout_height="@dimen/d_row_receiver_message_image_size"
+            android:layout_marginTop="@dimen/d_row_receiver_message_image_marginTop"
+            fresco:placeholderImage="@color/facebook_button"
+            fresco:actualImageScaleType="centerCrop"/>
+        <ProgressBar
+            android:id="@+id/pb_image_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_sent_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:gravity="end"
+        android:paddingTop="@dimen/d_message_timestamp_padding"
+        android:textSize="12sp" />
 </LinearLayout>

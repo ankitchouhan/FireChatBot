@@ -1,12 +1,14 @@
 package com.firechatbot.fragments;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +19,30 @@ import android.widget.TextView;
 import com.firechatbot.R;
 import com.firechatbot.activities.MainActivity;
 import com.firechatbot.adapters.ChatAdapter;
+import com.firechatbot.beans.ChatContactBean;
+import com.firechatbot.beans.ContactBean;
+import com.firechatbot.beans.UserDetailBean;
+import com.firechatbot.database.FireDatabase;
+import com.firechatbot.interfaces.OnAppUserReceived;
+import com.firechatbot.interfaces.OnContactsReceived;
 import com.firechatbot.utils.AuthenticationUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class ChatFragment extends Fragment implements View.OnClickListener{
 
-    RecyclerView recyclerViewRV;
-    TextView addFriendSampleTV;
-    ImageView addFriendIV;
-    Button addFriendBtn;
-    ChatAdapter mChatAdapter;
+public class ChatFragment extends Fragment implements View.OnClickListener,OnAppUserReceived{
+
+    private RecyclerView recyclerViewRV;
+    private TextView addFriendSampleTV;
+    private ImageView addFriendIV;
+    private Button addFriendBtn;
+    private ChatAdapter mChatAdapter;
     private TextView toolbarHeadingTv;
     private ImageView toolbarEditIv;
+    private Activity mActivity;
+    private List<ChatContactBean> mInboxList;
+    private List<UserDetailBean> mAppUsersList;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,7 +77,10 @@ public class ChatFragment extends Fragment implements View.OnClickListener{
      * */
     private void initVariables()
     {
-        mChatAdapter = new ChatAdapter();
+        //mAppUsersList = new ArrayList<>();
+        mActivity = getActivity();
+        mInboxList = new ArrayList<>();
+        mChatAdapter = new ChatAdapter(mInboxList,mActivity);
         recyclerViewRV.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         recyclerViewRV.setAdapter(mChatAdapter);
     }
@@ -91,4 +108,40 @@ public class ChatFragment extends Fragment implements View.OnClickListener{
         toolbarHeadingTv.setText(getString(R.string.chat));
         toolbarEditIv.setVisibility(View.VISIBLE);
     }
+
+    @Override
+    public void getAppUsers(List<UserDetailBean> list) {
+        //mAppUsersList.addAll(list);
+    }
+
+    @Override
+    public void getUser(UserDetailBean bean) {
+        if (bean!=null) {
+            UserDetailBean mCurrentUser = new UserDetailBean();
+            mCurrentUser.setuId(bean.getuId());
+            FireDatabase.getInstance().getUsersFromInbox(mActivity,bean.getuId());
+        }
+    }
+
+    @Override
+    public void getInboxList(List<ChatContactBean> list) {
+        mInboxList.clear();
+        mInboxList.addAll(list);
+        if (mInboxList.size()>0)
+        {
+            addFriendBtn.setVisibility(View.GONE);
+            addFriendSampleTV.setVisibility(View.GONE);
+            addFriendIV.setVisibility(View.GONE);
+            recyclerViewRV.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            addFriendBtn.setVisibility(View.VISIBLE);
+            addFriendSampleTV.setVisibility(View.VISIBLE);
+            addFriendIV.setVisibility(View.VISIBLE);
+            recyclerViewRV.setVisibility(View.GONE);
+        }
+        mChatAdapter.notifyDataSetChanged();
+    }
+
 }

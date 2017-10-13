@@ -5,6 +5,8 @@
 
     <string name="facebook_app_id">1663025317062080</string>
     <string name="fb_login_protocol_scheme">fb1663025317062080</string>
+    
+    <string name="API_KEY">AIzaSyCcSmSPj6ZOrMj982MQoXqgF0HBoE3zqEY</string>
 
     <string name="welcome_message"><b>Enter your phone number</b> To create a FIRECHAT account, please verify your phone number \n or facebook account</string>
 
@@ -63,7 +65,7 @@
     <string name="collapsed">Collapsed</string>
     <string name="expanded">Expanded</string>
     <string name="share_location">Share Location</string>
-    <string name="share_status">Do you want to send your location to </string>
+    <string name="share_status">Do you want to send your location \n to </string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
@@ -80,4 +82,12 @@
     <string name="mins_ago"> mins ago</string>
     <string name="just_now">Just now</string>
     <string name="secs_ago"> secs ago</string>
+    <string name="exit">Press once again to exit!</string>
+    <string name="sent">sent</string>
+    <string name="seen">seen</string>
+    <string name="online">Online</string>
+    <string name="offline">Offline</string>
+    <string name="max_image_selected">Image select limit exceed</string>
+    <string name="image">image</string>
+
 </resources>

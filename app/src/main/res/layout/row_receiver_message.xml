@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:gravity="start"
     android:orientation="vertical"
     android:layout_margin="@dimen/d_message_sender_padding">
@@ -22,6 +23,12 @@
         android:maxWidth="@dimen/d_200dp"
         android:padding="@dimen/d_message_padding"
         android:textColor="@color/black"
-        android:textSize="@dimen/s_message_size">
-    </TextView>
+        android:textSize="@dimen/s_message_size"/>
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sdv_chat_message_image"
+        android:layout_width="@dimen/d_row_receiver_message_image_size"
+        android:layout_height="@dimen/d_row_receiver_message_image_size"
+        android:layout_marginTop="@dimen/d_row_receiver_message_image_marginTop"
+        fresco:placeholderImage="@color/facebook_button"
+        fresco:actualImageScaleType="centerCrop"/>
 </LinearLayout>

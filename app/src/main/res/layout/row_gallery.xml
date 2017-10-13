@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/d_row_gallery_size"
     android:layout_height="@dimen/d_row_gallery_size"
-    android:orientation="vertical">
-    <ImageView
-        android:id="@+id/iv_gallery_icon"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/d_row_gallery_marginTop">
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sdv_gallery_icon"
         android:layout_width="match_parent"
         android:layout_height= "match_parent"
-        android:src="@color/facebook_button"/>
-
-</LinearLayout>
+        fresco:placeholderImage="@drawable/ic_profile_avatar"
+        android:src="@color/facebook_button"
+        fresco:actualImageScaleType="centerCrop"/>
+    <CheckBox
+        android:id="@+id/cb_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/sdv_gallery_icon"/>
+</RelativeLayout>

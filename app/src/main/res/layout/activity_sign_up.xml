@@ -88,6 +88,8 @@
                 android:gravity="end"
                 android:hint="@string/required"
                 android:inputType="phone"
+                android:digits="0123456789"
+                android:imeOptions="actionDone"
                 android:maxLength="10"
                 android:padding="@dimen/d_ll_country_padding" />
 

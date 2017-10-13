@@ -82,4 +82,18 @@
             android:visibility="gone" />
     </LinearLayout>
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d_300dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:id="@+id/ll_bottom_gallery">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
 </LinearLayout>

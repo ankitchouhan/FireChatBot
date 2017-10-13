@@ -149,13 +149,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 if (AppUtils.validateNumber(phoneNumberEt.getText().toString().trim())) {
                     if (AppUtils.checkInternet(this))
                     {
+                        AppUtils.hideKeyboard(layoutLL,this);
                         showViews();
                         checkUserInDatabase();
                     }
                     else
                         AppUtils.displayToast(this,getString(R.string.internet_unavailable));
                 } else
-                    AppUtils.snackBar(layoutLL, getString(R.string.enter_valid_number));
+                    AppUtils.displayToast(this, getString(R.string.enter_valid_number));
                 break;
             case R.id.f_sign_up_facebook:
                 LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList(getString(R.string.public_profile), getString(R.string.email)));

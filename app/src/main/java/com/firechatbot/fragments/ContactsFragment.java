@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -32,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ContactsFragment extends Fragment implements SearchView.OnQueryTextListener, View.OnClickListener,OnContactsReceived,TextWatcher{
+public class ContactsFragment extends Fragment implements SearchView.OnQueryTextListener, View.OnClickListener, OnContactsReceived, TextWatcher {
 
     private TextView profileImageTv;
     private TextView nameTv, phoneTv;
@@ -44,6 +46,8 @@ public class ContactsFragment extends Fragment implements SearchView.OnQueryText
     private Activity mActivity;
     private TextView toolbarHeadingTv;
     private ImageView toolbarAddIv;
+    private EditText searchEt;
+    private NestedScrollView scrollViewSv;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,17 +66,18 @@ public class ContactsFragment extends Fragment implements SearchView.OnQueryText
         phoneTv = view.findViewById(R.id.tv_phone);
         profileImageTv = view.findViewById(R.id.tv_fragment_profile_icon);
         recyclerViewRv = view.findViewById(R.id.rv_contacts);
+        view.findViewById(R.id.rl_search_parent).setOnClickListener(this);
         Toolbar toolbarTb = view.findViewById(R.id.tb_toolbar);
+        scrollViewSv = view.findViewById(R.id.nsv_scroll);
         //SearchView searchView = view.findViewById(R.id.sv_search);
-       // searchView.setOnQueryTextListener(this);
+        // searchView.setOnQueryTextListener(this);
         //searchView.setQueryHint(getString(R.string.search_hint));
-        EditText searchEt = view.findViewById(R.id.et_search);
+        searchEt = view.findViewById(R.id.et_search);
         //RelativeLayout searchParent = view.findViewById(R.id.rl_search_parent);
         searchEt.addTextChangedListener(this);
         mActivity = getActivity();
-        ((AppCompatActivity)mActivity).setSupportActionBar(toolbarTb);
-        if (toolbarTb!=null)
-        {
+        ((AppCompatActivity) mActivity).setSupportActionBar(toolbarTb);
+        if (toolbarTb != null) {
             toolbarHeadingTv = toolbarTb.findViewById(R.id.tv_heading);
             toolbarAddIv = toolbarTb.findViewById(R.id.iv_add);
         }
@@ -92,9 +97,16 @@ public class ContactsFragment extends Fragment implements SearchView.OnQueryText
             mList.addAll(getContacts());
             mContactAdapter.notifyDataSetChanged();*/
         }
-        mContactAdapter = new ContactAdapter(mActivity,mList);
+        mContactAdapter = new ContactAdapter(mActivity, mList);
         recyclerViewRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recyclerViewRv.setAdapter(mContactAdapter);
+        /*scrollViewSv.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
+                float y = recyclerViewRv.getChildAt(0).getY();
+                scrollViewSv.scrollTo(1, (int) y);
+            }
+        });*/
     }
 
     /**
@@ -126,7 +138,6 @@ public class ContactsFragment extends Fragment implements SearchView.OnQueryText
     }*/
 
 
-
     /**
      * Method to display contact image.
      */
@@ -146,12 +157,17 @@ public class ContactsFragment extends Fragment implements SearchView.OnQueryText
 
     @Override
     public boolean onQueryTextChange(String newText) {
-       // mContactAdapter.getFilter().filter(newText.toLowerCase().trim());
+        // mContactAdapter.getFilter().filter(newText.toLowerCase().trim());
         return true;
     }
 
     @Override
     public void onClick(View view) {
+        if (view.getId() == R.id.rl_search_parent) {
+            searchEt.requestFocus();
+            InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(searchEt, InputMethodManager.SHOW_FORCED);
+        }
     }
 
     @Override
@@ -171,40 +187,43 @@ public class ContactsFragment extends Fragment implements SearchView.OnQueryText
 
     /**
      * Method to filter contact.
-     * */
-    private void filterContacts()
-    {
+     */
+    private void filterContacts() {
         List<ContactBean> nonUserList = new ArrayList<>();
-        for (ContactBean bean : mList)
-        {
-            int count =0;
+        List<UserDetailBean> appUserList = new ArrayList<>();
+        List<ContactBean> contactUser = new ArrayList<>();
+        for (ContactBean bean : mList) {
+            int count = 0;
             String number = bean.getPhone();
             if (number.contains("-"))
-                number = number.replaceAll("-","");
+                number = number.replaceAll("-", "");
             if (number.contains(" "))
-                number = number.replaceAll(" ","");
+                number = number.replaceAll(" ", "");
             if (number.contains("+91"))
-                number = number.replace("+91","");
-            if (number.length()==11)
+                number = number.replace("+91", "");
+            if (number.length() == 11)
                 number = number.substring(1);
-            for (UserDetailBean dbContact : mContactList)
-            {
-                if (number.trim().equals(dbContact.getPhone().trim()))
-                {
-                    count=1;
+            for (UserDetailBean dbContact : mContactList) {
+                if (number.trim().equals(dbContact.getPhone().trim())) {
+                    count = 1;
+                    appUserList.add(dbContact);
                     break;
                 }
             }
-            if (count==1)
-            {
+            if (count == 1) {
+                ContactBean contactBean = new ContactBean();
+                contactBean.setPhone(number);
+                contactBean.setName(bean.getName());
+                contactUser.add(contactBean);
                 bean.setStatus(1);
                 mDbList.add(bean);
-            }
-            else{
+            } else {
                 bean.setStatus(0);
                 nonUserList.add(bean);
             }
         }
+        ((MainActivity)mActivity).getAppUsersList(appUserList);
+        ((MainActivity)mActivity).getAppUser(contactUser);
         mList.clear();
         mList.addAll(mDbList);
         mList.addAll(nonUserList);
@@ -215,9 +234,8 @@ public class ContactsFragment extends Fragment implements SearchView.OnQueryText
 
     /**
      * Method to set toolbar for contact fragment.
-     * */
-    public void toolbarForContacts()
-    {
+     */
+    public void toolbarForContacts() {
         toolbarHeadingTv.setText(getString(R.string.contacts));
         toolbarAddIv.setVisibility(View.VISIBLE);
     }
