@@ -29,6 +29,7 @@ import com.firechatbot.fragments.ChatFragment;
 import com.firechatbot.fragments.ContactsFragment;
 import com.firechatbot.interfaces.OnAppUserReceived;
 import com.firechatbot.interfaces.OnContactsReceived;
+import com.firechatbot.tasks.ContactsAsyncTask;
 import com.firechatbot.utils.AppConstants;
 import com.firechatbot.utils.AppSharedPreferences;
 import com.firechatbot.utils.AppUtils;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayoutTL;
     private String mPhoneNumber;
     private List<ContactBean> mContactList;
+    private List<UserDetailBean> mDbUsersList;
     private OnContactsReceived mContactsReceived;
     private OnAppUserReceived mAppUserReceived;
     private UserDetailBean mCurrentUser;
@@ -77,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         pagerVP.setOffscreenPageLimit(3);
         pagerVP.setCurrentItem(1);
         getCurrentUser();
-
     }
 
     /**
@@ -95,6 +96,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method to get contacts from async task.
+     * */
+    public void getContactsFromAsync(List<ContactBean> list)
+    {
+        //mContactList = list;
+       if (mContactsReceived!=null)
+       {
+           mContactsReceived.syncContacts(list);
+           mContactsReceived.getContacts(mDbUsersList);
+       }
+    }
+
 
     /**
      * Method to request contact permission.
@@ -103,7 +117,8 @@ public class MainActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, AppConstants.CONTACTS_REQUEST_CODE);
         else {
-            mContactList = getContacts();
+           // mContactList = getContacts();
+            new ContactsAsyncTask(this).execute();
             initViews();
             setTabs();
         }
@@ -114,7 +129,8 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == AppConstants.CONTACTS_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mContactList = getContacts();
+               // mContactList = getContacts();
+                new ContactsAsyncTask(this).execute();
                 initViews();
                 setTabs();
             } else {
@@ -160,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
     public List<ContactBean> contactDetails() {
         return mContactList;
     }
-
 
     /**
      * Method to start signUp activity after signOut.
@@ -218,8 +233,9 @@ public class MainActivity extends AppCompatActivity {
      * Method to get contacts from database.
      */
     public void getContactsFromDatabase(List<UserDetailBean> list) {
-        if (mContactsReceived != null)
-            mContactsReceived.getContacts(list);
+        mDbUsersList = list;
+       /* if (mContactsReceived != null)
+            mContactsReceived.getContacts(list);*/
     }
 
     @Override
@@ -238,6 +254,8 @@ public class MainActivity extends AppCompatActivity {
     public void getAppUsersList(List<UserDetailBean> list) {
         mAppUserList.clear();
         mAppUserList.addAll(list);
+        FireDatabase.getInstance().getUsersFromInbox(this,mCurrentUser.getuId());
+        //filterInboxUsers();
        /* if (mAppUserReceived != null) {
             mAppUserReceived.getAppUsers(list);
         }*/
@@ -248,6 +266,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public void getAppUser(List<ContactBean> list) {
         mAppUserContactList = list;
+       /* if (mAppUserReceived != null)
+            mAppUserReceived.getUser(mCurrentUser);*/
     }
 
     /**
@@ -277,6 +297,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < mChatContactBeanList.size(); i++) {
             if (mChatContactBeanList.get(i).getChatRoomId().equals(chatRoomId)) {
                 mChatContactBeanList.get(i).setLastMessage(bean.getMessage());
+                mChatContactBeanList.get(i).setMessageType(bean.getMessageType());
                 break;
             }
         }

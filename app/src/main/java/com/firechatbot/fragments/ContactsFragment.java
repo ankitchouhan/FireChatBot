@@ -47,7 +47,7 @@ public class ContactsFragment extends Fragment implements SearchView.OnQueryText
     private TextView toolbarHeadingTv;
     private ImageView toolbarAddIv;
     private EditText searchEt;
-    private NestedScrollView scrollViewSv;
+   // private NestedScrollView scrollViewSv;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,7 +68,7 @@ public class ContactsFragment extends Fragment implements SearchView.OnQueryText
         recyclerViewRv = view.findViewById(R.id.rv_contacts);
         view.findViewById(R.id.rl_search_parent).setOnClickListener(this);
         Toolbar toolbarTb = view.findViewById(R.id.tb_toolbar);
-        scrollViewSv = view.findViewById(R.id.nsv_scroll);
+        //scrollViewSv = view.findViewById(R.id.nsv_scroll);
         //SearchView searchView = view.findViewById(R.id.sv_search);
         // searchView.setOnQueryTextListener(this);
         //searchView.setQueryHint(getString(R.string.search_hint));
@@ -90,13 +90,13 @@ public class ContactsFragment extends Fragment implements SearchView.OnQueryText
     private void initVariables() {
         mList = new ArrayList<>();
         mDbList = new ArrayList<>();
-        if (((MainActivity) mActivity).contactDetails() != null) {
+       /* if (((MainActivity) mActivity).contactDetails() != null) {
             mList.clear();
             mList.addAll(((MainActivity) mActivity).contactDetails());
+        }*/
            /* mList.clear();
             mList.addAll(getContacts());
             mContactAdapter.notifyDataSetChanged();*/
-        }
         mContactAdapter = new ContactAdapter(mActivity, mList);
         recyclerViewRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recyclerViewRv.setAdapter(mContactAdapter);
@@ -107,6 +107,14 @@ public class ContactsFragment extends Fragment implements SearchView.OnQueryText
                 scrollViewSv.scrollTo(1, (int) y);
             }
         });*/
+    }
+
+    @Override
+    public void syncContacts(List<ContactBean> list) {
+        mList.clear();
+        mList.addAll(list);
+        mContactAdapter.notifyDataSetChanged();
+        //filterContacts();
     }
 
     /**
@@ -185,6 +193,8 @@ public class ContactsFragment extends Fragment implements SearchView.OnQueryText
         }
     }
 
+
+
     /**
      * Method to filter contact.
      */
@@ -192,39 +202,44 @@ public class ContactsFragment extends Fragment implements SearchView.OnQueryText
         List<ContactBean> nonUserList = new ArrayList<>();
         List<UserDetailBean> appUserList = new ArrayList<>();
         List<ContactBean> contactUser = new ArrayList<>();
-        for (ContactBean bean : mList) {
-            int count = 0;
-            String number = bean.getPhone();
-            if (number.contains("-"))
-                number = number.replaceAll("-", "");
-            if (number.contains(" "))
-                number = number.replaceAll(" ", "");
-            if (number.contains("+91"))
-                number = number.replace("+91", "");
-            if (number.length() == 11)
-                number = number.substring(1);
-            for (UserDetailBean dbContact : mContactList) {
-                if (number.trim().equals(dbContact.getPhone().trim())) {
-                    count = 1;
-                    appUserList.add(dbContact);
-                    break;
+        if (mContactList!=null&&mContactList.size()>0)
+        {
+            for (ContactBean bean : mList) {
+                int count = 0;
+                String number = bean.getPhone();
+                if (number.contains("-"))
+                    number = number.replaceAll("-", "");
+                if (number.contains(" "))
+                    number = number.replaceAll(" ", "");
+                if (number.contains("+91"))
+                    number = number.replace("+91", "");
+                if (number.length() == 11)
+                    number = number.substring(1);
+                for (UserDetailBean dbContact : mContactList) {
+                    if (number.trim().equals(dbContact.getPhone().trim())) {
+                        count = 1;
+                        appUserList.add(dbContact);
+                        break;
+                    }
+                }
+                if (count == 1) {
+                    ContactBean contactBean = new ContactBean();
+                    contactBean.setPhone(number);
+                    contactBean.setName(bean.getName());
+                    contactUser.add(contactBean);
+                    bean.setStatus(1);
+                    mDbList.add(bean);
+                } else {
+                    bean.setStatus(0);
+                    nonUserList.add(bean);
                 }
             }
-            if (count == 1) {
-                ContactBean contactBean = new ContactBean();
-                contactBean.setPhone(number);
-                contactBean.setName(bean.getName());
-                contactUser.add(contactBean);
-                bean.setStatus(1);
-                mDbList.add(bean);
-            } else {
-                bean.setStatus(0);
-                nonUserList.add(bean);
-            }
         }
+
         ((MainActivity)mActivity).getAppUsersList(appUserList);
         ((MainActivity)mActivity).getAppUser(contactUser);
-        mList.clear();
+        if (mContactList!=null)
+            mList.clear();
         mList.addAll(mDbList);
         mList.addAll(nonUserList);
         mContactAdapter.notifyDataSetChanged();

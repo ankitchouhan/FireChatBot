@@ -301,12 +301,11 @@ public class FireDatabase {
     /**
      * Method to create message node.
      */
-    public void createMessageNodeInDatabase(String message, String chatRoomId, String senderId, int messageType) {
+    public void createMessageNodeInDatabase(double lat,double longt,String message, String chatRoomId, String senderId, int messageType) {
         String mId = mReference.child(AppConstants.MESSAGE_NODE).push().getKey();
-        mReference.child(AppConstants.MESSAGE_NODE).child(chatRoomId).child(mId).setValue(new MessageBean(messageType, senderId, message, mId, ServerValue.TIMESTAMP, 0));
-        setLastMessage(chatRoomId, new MessageBean(messageType, senderId, message, mId, ServerValue.TIMESTAMP, 0));
+        mReference.child(AppConstants.MESSAGE_NODE).child(chatRoomId).child(mId).setValue(new MessageBean(lat,longt,messageType, senderId, message, mId, ServerValue.TIMESTAMP, 0));
+        setLastMessage(chatRoomId, new MessageBean(lat,longt,messageType, senderId, message, mId, ServerValue.TIMESTAMP, 0));
     }
-
 
     /**
      * Method to get chatRoomId from inbox.
@@ -538,6 +537,7 @@ public class FireDatabase {
      * */
     public void removeLastMessageNodeListener()
     {
-        mReference.child(AppConstants.LAST_MESSAGE_NODE).removeEventListener(mLastMessageListener);
+        if (mLastMessageListener!=null)
+            mReference.child(AppConstants.LAST_MESSAGE_NODE).removeEventListener(mLastMessageListener);
     }
 }

@@ -42,7 +42,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener,OnApp
     private ImageView toolbarEditIv;
     private Activity mActivity;
     private List<ChatContactBean> mInboxList;
-    private List<UserDetailBean> mAppUsersList;
+    //private List<UserDetailBean> mAppUsersList;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -103,6 +103,9 @@ public class ChatFragment extends Fragment implements View.OnClickListener,OnApp
         AuthenticationUtils.getInstance().signOut();
     }
 
+    /**
+     * Method to set toolbar heading.
+     * */
     public void toolbarForChat()
     {
         toolbarHeadingTv.setText(getString(R.string.chat));
@@ -116,11 +119,11 @@ public class ChatFragment extends Fragment implements View.OnClickListener,OnApp
 
     @Override
     public void getUser(UserDetailBean bean) {
-        if (bean!=null) {
-            UserDetailBean mCurrentUser = new UserDetailBean();
-            mCurrentUser.setuId(bean.getuId());
-            FireDatabase.getInstance().getUsersFromInbox(mActivity,bean.getuId());
-        }
+       // if (bean!=null) {
+           // UserDetailBean mCurrentUser = new UserDetailBean();
+           // mCurrentUser.setuId(bean.getuId());
+           // FireDatabase.getInstance().getUsersFromInbox(mActivity,bean.getuId());
+      //  }
     }
 
     @Override

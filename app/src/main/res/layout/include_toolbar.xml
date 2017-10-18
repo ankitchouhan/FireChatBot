@@ -38,7 +38,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_otp_back"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:padding="@dimen/d_toolbar_back_padding"/>
 
             <ImageView
                 android:id="@+id/iv_call"

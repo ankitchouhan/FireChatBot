@@ -4,9 +4,6 @@
     <solid android:color="@color/white" />
 
     <corners
-        android:bottomLeftRadius="@dimen/d_dialog_background"
-        android:bottomRightRadius="@dimen/d_dialog_background"
-        android:topLeftRadius="@dimen/d_dialog_background"
-        android:topRightRadius="@dimen/d_dialog_background" />
+        android:radius="@dimen/d_dialog_background"/>
 
 </shape>

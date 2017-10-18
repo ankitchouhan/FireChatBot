@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -25,6 +26,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,12 +43,9 @@ import com.firechatbot.database.FireDatabase;
 import com.firechatbot.database.FireStorage;
 import com.firechatbot.utils.AppConstants;
 import com.firechatbot.utils.AppUtils;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.io.File;
@@ -72,7 +71,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private List<MessageBean> mMessageList;
     private List<Uri> mSendingImagesList;
     private boolean mCheckMessages = true;
-    private String mChatRoomId;
+    private String mMapUrl;
+    private double mLatitude, mLongtitude;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,6 +119,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 if (b) {
                     if (bottomGalleryLL.getVisibility() == View.VISIBLE) {
                         bottomGalleryLL.setVisibility(View.GONE);
+                        mSendingImagesList.clear();
                         hideViews();
                     }
                 }
@@ -163,6 +164,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.et_message_input:
                 if (bottomGalleryLL.getVisibility() == View.VISIBLE) {
                     bottomGalleryLL.setVisibility(View.GONE);
+                    mSendingImagesList.clear();
                     hideViews();
                 }
                 break;
@@ -185,17 +187,28 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.iv_location:
-                Dialog dialog = new Dialog(this);
+                final Dialog dialog = new Dialog(this);
                 dialog.setContentView(R.layout.dialog_location);
+                Button yesBtn = dialog.findViewById(R.id.tv_yes);
+                Button noBtn = dialog.findViewById(R.id.tv_no);
                 if (dialog.getWindow() != null)
                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 TextView textView = dialog.findViewById(R.id.tv_share_status);
                 textView.setText(getString(R.string.share_status) + " " + mContact.getName() + "?");
+                curveCorners(yesBtn, R.color.purple, new float[]{0, 0, 0, 0, 25, 25, 0, 0});
+                curveCorners(noBtn, R.color.light_gray, new float[]{0, 0, 0, 0, 0, 0, 25, 25});
                 dialog.show();
-                dialog.findViewById(R.id.tv_yes).setOnClickListener(new View.OnClickListener() {
+                yesBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         requestLocationPermission();
+                        dialog.cancel();
+                    }
+                });
+                noBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.cancel();
                     }
                 });
                 break;
@@ -204,6 +217,17 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 requestStoragePermission();
                 break;
         }
+    }
+
+    /**
+     * Method to round corners of dialog.
+     */
+    public void curveCorners(View view, int color, float[] floats) {
+        GradientDrawable shape = new GradientDrawable();
+        shape.setShape(GradientDrawable.RECTANGLE);
+        shape.setColor(ContextCompat.getColor(this, color));
+        shape.setCornerRadii(floats);
+        view.setBackground(shape);
     }
 
     @Override
@@ -259,7 +283,10 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         if (bean.getStatus() == 1)
             toolbarStatusTv.setText(getString(R.string.online));
         else
-            toolbarStatusTv.setText(android.text.format.DateFormat.format("dd-MM-yy - hh:mm a", mReceiver.getLastSeen()));
+        {
+            String text = getString(R.string.last_active)+" "+android.text.format.DateFormat.format("dd-MM-yy - hh:mm a", mReceiver.getLastSeen());
+            toolbarStatusTv.setText(text);
+        }
         if (mCheckMessages) {
             FireDatabase.getInstance().getChatRoomId(mCurrentUser.getuId(), bean.getuId(), this);
             mCheckMessages = false;
@@ -280,22 +307,43 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
      */
     public void getChatRoomId(String chatRoomId) {
         if (chatRoomId != null) {
-            mChatRoomId = chatRoomId;
             if (mSendingImagesList.size() > 0) {
-                for (Uri file : mSendingImagesList)
+                for (Uri file : mSendingImagesList) {
+                    MessageBean messageBean = new MessageBean();
+                    messageBean.setMessageType(1);
+                    messageBean.setMessage(String.valueOf(file));
+                    messageBean.setSender(mCurrentUser.getuId());
+                    messageBean.setStatus(2);
+                    messageBean.setTimestamp(System.currentTimeMillis());
+                    setImageInMessageList(messageBean);
                     FireStorage.getInstance().uploadImageDuringChat(file, chatRoomId, this);
+                }
                 mSendingImagesList.clear();
-            } else
-                FireDatabase.getInstance().createMessageNodeInDatabase(messageEt.getText().toString().trim(), chatRoomId, mCurrentUser.getuId(), 0);
+            } else if (!messageEt.getText().toString().trim().isEmpty())
+                FireDatabase.getInstance().createMessageNodeInDatabase(0, 0, messageEt.getText().toString().trim(), chatRoomId, mCurrentUser.getuId(), 0);
+            else if (mMapUrl != null) {
+                FireDatabase.getInstance().createMessageNodeInDatabase(mLatitude, mLongtitude, mMapUrl, chatRoomId, mCurrentUser.getuId(), 2);
+                mLatitude = 0;
+                mLongtitude = 0;
+            }
         }
         messageEt.setText("");
+    }
+
+    /**
+     * Method to set uploading image in message list.
+     */
+    private void setImageInMessageList(MessageBean bean) {
+        mMessageList.add(bean);
+        messageRv.scrollToPosition(mMessageAdapter.getItemCount() - 1);
+        mMessageAdapter.notifyDataSetChanged();
     }
 
     /**
      * Method to get imageUrl and upload Image.
      */
     public void getImageUrlToUpload(Uri url, String chatRoomId) {
-        FireDatabase.getInstance().createMessageNodeInDatabase(url.toString(), chatRoomId, mCurrentUser.getuId(), 1);
+        FireDatabase.getInstance().createMessageNodeInDatabase(0, 0, url.toString(), chatRoomId, mCurrentUser.getuId(), 1);
     }
 
     /**
@@ -329,7 +377,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             if (bean.getStatus() == 1)
                 toolbarStatusTv.setText(getString(R.string.online));
             else
-                toolbarStatusTv.setText(android.text.format.DateFormat.format("dd-MM-yy hh:mm a", bean.getLastSeen()));
+                toolbarStatusTv.setText(getString(R.string.last_active) + " " + android.text.format.DateFormat.format("dd-MM-yy hh:mm a", bean.getLastSeen()));
         }
     }
 
@@ -359,7 +407,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 int dataColumnIndex = (imagesCursor.getColumnIndex(MediaStore.Images.Media.DATA));
                 mImageList.add(new ImageBean(new File(imagesCursor.getString(dataColumnIndex)), false));
                 // Uri baseUri = Uri.parse("content://media/external/images/media");
-                // Log.d("ankit"," "+Uri.withAppendedPath(baseUri, "" + dataColumnIndex));
                 //mImageList.add(String.valueOf(Uri.withAppendedPath(baseUri, "" + dataColumnIndex)));
             }
             imagesCursor.close();
@@ -394,15 +441,16 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                     displayPlacePicker();
                 }
                 break;
-
         }
     }
 
     @Override
     public void onBackPressed() {
-        if (bottomGalleryLL.getVisibility() == View.VISIBLE)
+        if (bottomGalleryLL.getVisibility() == View.VISIBLE) {
             bottomGalleryLL.setVisibility(View.GONE);
-        else
+            mSendingImagesList.clear();
+            hideViews();
+        } else
             super.onBackPressed();
     }
 
@@ -446,30 +494,33 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void requestLocationPermission() {
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                displayPlacePicker();
+            displayPlacePicker();
         } else
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, AppConstants.ACCESS_FINE_LOCATION_REQUEST_CODE);
     }
 
 
     /**
-    * Method to display place picker.
-    */
+     * Method to display place picker.
+     */
     private void displayPlacePicker() {
-            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-            try {
-                startActivityForResult(builder.build(this), AppConstants.PLACE_PICKER_REQUEST_CODE);
-            } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
-                e.printStackTrace();
-            }
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        try {
+            startActivityForResult(builder.build(this), AppConstants.PLACE_PICKER_REQUEST_CODE);
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == AppConstants.PLACE_PICKER_REQUEST_CODE && resultCode == RESULT_OK)
-        {
+        if (requestCode == AppConstants.PLACE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
             Place mPlace = PlacePicker.getPlace(this, data);
+            mLatitude = mPlace.getLatLng().latitude;
+            mLongtitude = mPlace.getLatLng().longitude;
+            mMapUrl = AppUtils.makeUrl(mLatitude, mLongtitude);
+            FireDatabase.getInstance().getReceiverDetails(this, filterContacts(mContact.getPhone()));
         }
     }
 }

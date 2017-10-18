@@ -2,20 +2,38 @@ package com.firechatbot.adapters;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.drawable.ProgressBarDrawable;
+import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.common.ResizeOptions;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.firechatbot.R;
 import com.firechatbot.beans.MessageBean;
 import com.firechatbot.beans.UserDetailBean;
+import com.firechatbot.utils.AppUtils;
 import com.stfalcon.frescoimageviewer.ImageViewer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -25,11 +43,19 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private List<MessageBean> mList;
     private Context mContext;
     private UserDetailBean mCurrentUser;
+    private ProgressBarDrawable mProgressBarDrawable;
+    private Drawable mFailureDrawable;
 
-    public MessagesAdapter(List<MessageBean> mList, UserDetailBean mCurrentUser,Context mContext) {
+    public MessagesAdapter(List<MessageBean> mList, UserDetailBean mCurrentUser, Context mContext) {
         this.mList = mList;
         this.mCurrentUser = mCurrentUser;
         this.mContext = mContext;
+        mFailureDrawable = mContext.getDrawable(R.drawable.broken);
+        DrawableCompat.setTint(mFailureDrawable, Color.RED);
+        mProgressBarDrawable = new ProgressBarDrawable();
+        mProgressBarDrawable.setColor(ContextCompat.getColor(mContext, R.color.colorAccent));
+        mProgressBarDrawable.setBackgroundColor(ContextCompat.getColor(mContext, R.color.silver));
+        mProgressBarDrawable.setRadius(mContext.getResources().getDimensionPixelSize(R.dimen.drawee_hierarchy_progress_radius));
     }
 
     @Override
@@ -52,37 +78,67 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         switch (getItemViewType(position)) {
             case SENDER:
                 SenderViewHolder senderViewHolder = (SenderViewHolder) holder;
-                if (mList.get(position).getMessageType()==0)
-                {
+                if (mList.get(position).getMessageType() == 0) {
+                    senderViewHolder.imageProgressPb.setVisibility(View.GONE);
                     senderViewHolder.sendMessageTv.setVisibility(View.VISIBLE);
                     senderViewHolder.sendMessageTv.setText(mList.get(position).getMessage());
                     senderViewHolder.senderImageSdv.setVisibility(View.GONE);
-                }
-                else if (mList.get(position).getMessageType()==1)
-                {
+                } else if (mList.get(position).getMessageType() == 1) {
+                    if (mList.get(position).getMessage().startsWith("https://"))
+                        senderViewHolder.imageProgressPb.setVisibility(View.GONE);
+                    else {
+                        senderViewHolder.imageProgressPb.setVisibility(View.VISIBLE);
+                        if (!AppUtils.checkInternet(mContext)) {
+                            senderViewHolder.imageProgressPb.setVisibility(View.GONE);
+                            AppUtils.displayToast(mContext, mContext.getString(R.string.internet_unavailable));
+                        }
+                    }
+                    senderViewHolder.senderImageSdv.getHierarchy().setFailureImage(mFailureDrawable, ScalingUtils.ScaleType.CENTER_INSIDE);
+                    senderViewHolder.senderImageSdv.getHierarchy().setProgressBarImage(mProgressBarDrawable);
+                    ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(mList.get(position).getMessage()))
+                            .setResizeOptions(new ResizeOptions(200, 200))
+                            .build();
+                    senderViewHolder.senderImageSdv.setController(Fresco.newDraweeControllerBuilder()
+                            .setOldController(senderViewHolder.senderImageSdv.getController())
+                            .setImageRequest(request)
+                            .build());
                     senderViewHolder.senderImageSdv.setVisibility(View.VISIBLE);
-                    senderViewHolder.senderImageSdv.setImageURI(mList.get(position).getMessage());
+                    //senderViewHolder.senderImageSdv.setImageURI(mList.get(position).getMessage());
                     senderViewHolder.sendMessageTv.setVisibility(View.GONE);
+                } else if (mList.get(position).getMessageType() == 2) {
+                    senderViewHolder.senderImageSdv.setVisibility(View.VISIBLE);
+                    senderViewHolder.sendMessageTv.setVisibility(View.GONE);
+                    senderViewHolder.imageProgressPb.setVisibility(View.GONE);
+                    senderViewHolder.senderImageSdv.setImageURI(mList.get(position).getMessage());
                 }
                 senderViewHolder.timeStampTv.setText(convertTimestampIntoDates((Long) mList.get(position).getTimestamp()));
-                if (mList.get(position).getStatus()>0)
+                if (mList.get(position).getStatus() == 1)
                     senderViewHolder.sentStatusTv.setText(mContext.getString(R.string.seen));
-                else
+                else if (mList.get(position).getStatus()==0)
                     senderViewHolder.sentStatusTv.setText(mContext.getString(R.string.sent));
+                else
+                    senderViewHolder.sentStatusTv.setText(mContext.getString(R.string.sending));
                 break;
             case RECEIVER:
                 ReceiverViewHolder receiverViewHolder = (ReceiverViewHolder) holder;
                 receiverViewHolder.receiveMessageTv.setText(mList.get(position).getMessage());
-                if (mList.get(position).getMessageType()==0)
-                {
+                if (mList.get(position).getMessageType() == 0) {
                     receiverViewHolder.receiveMessageTv.setVisibility(View.VISIBLE);
                     receiverViewHolder.receiveMessageTv.setText(mList.get(position).getMessage());
                     receiverViewHolder.receiverImageSdv.setVisibility(View.GONE);
-                }
-                else if (mList.get(position).getMessageType()==1)
-                {
+                } else if (mList.get(position).getMessageType() == 1) {
                     receiverViewHolder.receiverImageSdv.setVisibility(View.VISIBLE);
-                    receiverViewHolder.receiverImageSdv.setImageURI(mList.get(position).getMessage());
+
+                    receiverViewHolder.receiverImageSdv.getHierarchy().setFailureImage(mFailureDrawable, ScalingUtils.ScaleType.CENTER_INSIDE);
+                    receiverViewHolder.receiverImageSdv.getHierarchy().setProgressBarImage(mProgressBarDrawable);
+                    ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(mList.get(position).getMessage()))
+                            .setResizeOptions(new ResizeOptions(200, 200))
+                            .build();
+                    receiverViewHolder.receiverImageSdv.setController(Fresco.newDraweeControllerBuilder()
+                            .setOldController(receiverViewHolder.receiverImageSdv.getController())
+                            .setImageRequest(request)
+                            .build());
+                    // receiverViewHolder.receiverImageSdv.setImageURI(mList.get(position).getMessage());
                     receiverViewHolder.receiveMessageTv.setVisibility(View.GONE);
                 }
                 receiverViewHolder.timeStampTv.setText(convertTimestampIntoDates((Long) mList.get(position).getTimestamp()));
@@ -110,6 +166,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private class SenderViewHolder extends RecyclerView.ViewHolder {
         private TextView sendMessageTv, timeStampTv, sentStatusTv;
         private SimpleDraweeView senderImageSdv;
+        private ProgressBar imageProgressPb;
 
         SenderViewHolder(View itemView) {
             super(itemView);
@@ -117,13 +174,24 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             timeStampTv = itemView.findViewById(R.id.tv_message_timestamp);
             sentStatusTv = itemView.findViewById(R.id.tv_sent_status);
             senderImageSdv = itemView.findViewById(R.id.sdv_sender_chat_message_image);
+            imageProgressPb = itemView.findViewById(R.id.pb_image_progress);
             senderImageSdv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (mList != null && mList.size() > 0) {
-                        List<String> list = new ArrayList<>();
-                        list.add(mList.get(getAdapterPosition()).getMessage());
-                        new ImageViewer.Builder(mContext, list).show();
+                        if (mList.get(getAdapterPosition()).getMessageType() == 1) {
+                            List<String> list = new ArrayList<>();
+                            list.add(mList.get(getAdapterPosition()).getMessage());
+                            new ImageViewer.Builder(mContext, list).show();
+                        } else if (mList.get(getAdapterPosition()).getMessageType() == 2) {
+                            String uri = String.format(Locale.ENGLISH, "geo:%f,%f?z=%d&q=%f,%f",
+                                    mList.get(getAdapterPosition()).getLat(),
+                                    mList.get(getAdapterPosition()).getLongt(), 10,
+                                    mList.get(getAdapterPosition()).getLat(),
+                                    mList.get(getAdapterPosition()).getLongt());
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                            mContext.startActivity(intent);
+                        }
                     }
                 }
             });
@@ -146,9 +214,19 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onClick(View view) {
                     if (mList != null && mList.size() > 0) {
-                        List<String> list = new ArrayList<>();
-                        list.add(mList.get(getAdapterPosition()).getMessage());
-                        new ImageViewer.Builder(mContext, list).show();
+                        if (mList.get(getAdapterPosition()).getMessageType() == 1) {
+                            List<String> list = new ArrayList<>();
+                            list.add(mList.get(getAdapterPosition()).getMessage());
+                            new ImageViewer.Builder(mContext, list).show();
+                        } else if (mList.get(getAdapterPosition()).getMessageType() == 2) {
+                            String uri = String.format(Locale.ENGLISH, "geo:%f,%f?z=%d&q=%f,%f",
+                                    mList.get(getAdapterPosition()).getLat(),
+                                    mList.get(getAdapterPosition()).getLongt(), 10,
+                                    mList.get(getAdapterPosition()).getLat(),
+                                    mList.get(getAdapterPosition()).getLongt());
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                            mContext.startActivity(intent);
+                        }
                     }
                 }
             });
@@ -216,7 +294,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             result = String.valueOf(elapsedDays) + mContext.getString(R.string.days_ago);
 
         } else if (elapsedHours == 1) {
-            result = String.valueOf(elapsedHours) +mContext.getString(R.string.hour_ago);
+            result = String.valueOf(elapsedHours) + mContext.getString(R.string.hour_ago);
         } else if (elapsedHours > 1) {
             result = String.valueOf(elapsedHours) + mContext.getString(R.string.hours_ago);
         } else if (elapsedMinutes == 1) {
@@ -232,5 +310,12 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
 
         return result;
+    }
+    /**
+     * Method to set progress bar.
+     * */
+    private void setProgressBarDrawable()
+    {
+
     }
 }

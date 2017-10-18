@@ -29,6 +29,5 @@
         android:layout_width="@dimen/d_row_receiver_message_image_size"
         android:layout_height="@dimen/d_row_receiver_message_image_size"
         android:layout_marginTop="@dimen/d_row_receiver_message_image_marginTop"
-        fresco:placeholderImage="@color/facebook_button"
         fresco:actualImageScaleType="centerCrop"/>
 </LinearLayout>

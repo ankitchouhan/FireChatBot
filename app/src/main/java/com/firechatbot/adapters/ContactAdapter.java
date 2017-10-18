@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.firechatbot.R;
 import com.firechatbot.activities.MainActivity;
+import com.firechatbot.anim.AnimationUtils;
 import com.firechatbot.beans.ContactBean;
 
 import java.util.ArrayList;
@@ -75,6 +76,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 break;
 
         }
+        AnimationUtils.animate(holder);
 
     }
 

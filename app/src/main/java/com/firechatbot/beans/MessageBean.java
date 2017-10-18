@@ -12,14 +12,18 @@ public class MessageBean {
     private int status;
     private String receiver;
     private int messageType;
+    private double lat;
+    private double longt;
 
     public MessageBean()
     {
 
     }
 
-    public MessageBean(int messageType,String sender,String message,String messageId,Object timestamp,int status)
+    public MessageBean(double lat,double longt,int messageType,String sender,String message,String messageId,Object timestamp,int status)
     {
+        this.lat = lat;
+        this.longt = longt;
         this.messageType = messageType;
         this.sender = sender;
         this.message = message;
@@ -54,6 +58,22 @@ public class MessageBean {
 
     public void setMessageType(int messageType) {
         this.messageType = messageType;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public void setLongt(double longt) {
+        this.longt = longt;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLongt() {
+        return longt;
     }
 
     public int getMessageType() {

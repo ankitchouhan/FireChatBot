@@ -41,6 +41,7 @@
     <dimen name="d_toolbar_heading_padding">10dp</dimen>
     <dimen name="d_toolbar_heading_padding_bottom">2dp</dimen>
     <dimen name="s_toolbar_status_size">12sp</dimen>
+    <dimen name="d_toolbar_back_padding">10dp</dimen>
     <dimen name="d_invite_image_marginStart">20dp</dimen>
 
     <dimen name="row_chat_name_marginStart">12dp</dimen>
@@ -74,11 +75,11 @@
     <dimen name="d_dialog_layout_marginStart">30dp</dimen>
     <dimen name="s_dialog_share_location_size">22sp</dimen>
     <dimen name="d_dialog_share_padding">27dp</dimen>
-    <dimen name="d_dialog_share_status_padding">15dp</dimen>
+    <dimen name="d_dialog_share_status_padding">10dp</dimen>
     <dimen name="s_dialog_share_status_size">17sp</dimen>
     <dimen name="s_dialog_yes_size">20sp</dimen>
     <dimen name="d_dialog_yes_padding">17dp</dimen>
-    <dimen name="d_dialog_background">18dp</dimen>
+    <dimen name="d_dialog_background">10dp</dimen>
     <dimen name="d_200dp">200dp</dimen>
     <dimen name="s_message_size">18sp</dimen>
     <dimen name="d_message_padding">15dp</dimen>
@@ -96,5 +97,7 @@
     <dimen name="d_row_gallery_marginTop">8dp</dimen>
     <dimen name="d_row_receiver_message_image_size">250dp</dimen>
     <dimen name="d_row_receiver_message_image_marginTop">8dp</dimen>
+
+    <dimen name="drawee_hierarchy_progress_radius">10dp</dimen>
 
 </resources>

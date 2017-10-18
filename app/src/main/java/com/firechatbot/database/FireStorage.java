@@ -87,6 +87,8 @@ public class FireStorage {
             @Override
             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
 
+                double progress = (100.0 * (float)taskSnapshot.getBytesTransferred()) / (float)taskSnapshot.getTotalByteCount();
+               // System.out.println("Upload is " + progress + "% done");
             }
         });
     }

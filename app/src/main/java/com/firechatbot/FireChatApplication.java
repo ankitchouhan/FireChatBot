@@ -127,6 +127,9 @@ public class FireChatApplication extends Application implements Application.Acti
     @Override
     public void onActivityDestroyed(Activity activity) {
         if (activity instanceof MainActivity)
+        {
+            FireDatabase.getInstance().updateOfflineStatus(mSharedPreferences.getUserInfo());
             mSharedPreferences.clearStoredInfo();
+        }
     }
 }
