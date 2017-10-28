@@ -120,6 +120,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                     if (bottomGalleryLL.getVisibility() == View.VISIBLE) {
                         bottomGalleryLL.setVisibility(View.GONE);
                         mSendingImagesList.clear();
+                        BottomGalleryAdapter.mSelectedImage = 0;
                         hideViews();
                     }
                 }
@@ -165,6 +166,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 if (bottomGalleryLL.getVisibility() == View.VISIBLE) {
                     bottomGalleryLL.setVisibility(View.GONE);
                     mSendingImagesList.clear();
+                    BottomGalleryAdapter.mSelectedImage = 0;
                     hideViews();
                 }
                 break;
@@ -325,6 +327,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 FireDatabase.getInstance().createMessageNodeInDatabase(mLatitude, mLongtitude, mMapUrl, chatRoomId, mCurrentUser.getuId(), 2);
                 mLatitude = 0;
                 mLongtitude = 0;
+                mMapUrl = null;
             }
         }
         messageEt.setText("");
@@ -449,6 +452,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         if (bottomGalleryLL.getVisibility() == View.VISIBLE) {
             bottomGalleryLL.setVisibility(View.GONE);
             mSendingImagesList.clear();
+            BottomGalleryAdapter.mSelectedImage = 0;
             hideViews();
         } else
             super.onBackPressed();

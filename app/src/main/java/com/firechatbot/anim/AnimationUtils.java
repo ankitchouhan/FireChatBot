@@ -11,10 +11,10 @@ public class AnimationUtils {
     /**
      * Method to animate recycler view items.
      * */
-    public static void animate(RecyclerView.ViewHolder holder)
+   /* public static void animate(RecyclerView.ViewHolder holder)
     {
         YoYo.with(Techniques.FadeIn)
                 .duration(1000)
                 .playOn(holder.itemView);
-    }
+    }*/
 }

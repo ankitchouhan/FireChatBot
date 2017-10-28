@@ -76,8 +76,6 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 break;
 
         }
-        AnimationUtils.animate(holder);
-
     }
 
     @Override
