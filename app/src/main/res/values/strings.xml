@@ -3,7 +3,12 @@
 
     <string name="welcome">Welcome To FireChat!</string>
 
-    <string name="welcome_message"><b>Enter your phone number</b> To create a \n FIRECHAT account, please verify\n your phone number</string>
+    <string name="facebook_app_id">1663025317062080</string>
+    <string name="fb_login_protocol_scheme">fb1663025317062080</string>
+    
+    <string name="API_KEY">AIzaSyCHu2hTDThO5t0ePuO9y9Zi2pq_kZCQE2w</string>
+
+    <string name="welcome_message"><b>Enter your phone number</b> To create a FIRECHAT account, please verify your phone number \n or facebook account</string>
 
     <string name="country">Country</string>
     <string name="phone_number">Phone Number</string>
@@ -32,8 +37,59 @@
     <string name="sign_out">Sign out</string>
     <string name="user_created">User successfully created</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="failed_upload_image">Failed to upload image.</string>
+    <string name="dont_see_what_looking">Don"'"t see who you"'"re looking for?</string>
+    <string name="add_friends">Add Friends</string>
+    <string name="contacts">Contacts</string>
+    <string name="chat">Chat</string>
+    <string name="settings">Settings</string>
+    <string-array name="tabs">
+        <item>Contacts</item>
+        <item>Chat</item>
+        <item>Settings</item>
+    </string-array>
 
+    <string name="search_hint">Search</string>
+
+    <string name="edit_text_digits">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="permission_denied">Permission denied!</string>
+    <string name="internet_unavailable">Internet Unavailable!</string>
+    <string name="invite">Invite your Friends</string>
+
+    <string name="send">Send</string>
+    <string name="invite_contact">Invite</string>
+
+    <string name="public_profile">public_profile</string>
+    <string name="email">email</string>
+
+    <string name="collapsed">Collapsed</string>
+    <string name="expanded">Expanded</string>
+    <string name="share_location">Share Location</string>
+    <string name="share_status">Do you want to send your location \n to </string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="month_ago"> month ago</string>
+    <string name="months_ago"> months ago</string>
+    <string name="year_ago"> year ago</string>
+    <string name="week_ago"> week ago</string>
+    <string name="weeks_ago"> weeks ago</string>
+    <string name="day_ago"> day ago</string>
+    <string name="days_ago"> days ago</string>
+    <string name="hour_ago"> hour ago</string>
+    <string name="hours_ago"> hours ago</string>
+    <string name="min_ago"> min ago</string>
+    <string name="mins_ago"> mins ago</string>
+    <string name="just_now">Just now</string>
+    <string name="secs_ago"> secs ago</string>
+    <string name="exit">Press once again to exit!</string>
+    <string name="sent">sent</string>
+    <string name="seen">seen</string>
+    <string name="sending">sending</string>
+    <string name="online">Online</string>
+    <string name="offline">Offline</string>
+    <string name="max_image_selected">Image select limit exceed</string>
+    <string name="image">image</string>
+    <string name="last_active">Last active at </string>
 
 </resources>

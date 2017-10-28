@@ -3,10 +3,10 @@ package com.firechatbot.utils;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
-import android.view.View;
 
 import com.firechatbot.R;
 import com.firechatbot.activities.MainActivity;
+import com.firechatbot.activities.SignUpActivity;
 import com.firechatbot.activities.UserDetailActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -38,21 +38,27 @@ public class AuthenticationUtils {
     /**
      * Method to signIn Anonymously.
      */
-    public void signInAnonymously(final Activity activity, final View layoutLL) {
-        ((UserDetailActivity) activity).showViews();
+    public void signInAnonymously(final Activity activity) {
         mAuth.signInAnonymously()
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        ((UserDetailActivity) activity).hideViews();
                         if (task.isSuccessful()) {
-                            ((UserDetailActivity) activity).startMainActivity();
-                        } else
-                            AppUtils.snackBar(layoutLL, activity.getString(R.string.fail_authenticate));
+                            if (activity instanceof UserDetailActivity)
+                                ((UserDetailActivity) activity).uploadUserProfile(getUser().getUid());
+                            else
+                                ((SignUpActivity) activity).startMainActivity();
+                        } else if (activity instanceof UserDetailActivity) {
+                            ((UserDetailActivity) activity).hideViews();
+                            AppUtils.displayToast(activity, activity.getString(R.string.fail_authenticate));
+                        }else
+                        {
+                            ((SignUpActivity)activity).hideViews();
+                            AppUtils.displayToast(activity, activity.getString(R.string.fail_authenticate));
+                        }
                     }
                 });
     }
-
 
     /**
      * Method to assign authStateListener.

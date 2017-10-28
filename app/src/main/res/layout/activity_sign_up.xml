@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:maxLines="3"
+            android:maxLines="4"
             android:paddingBottom="@dimen/d_welcome_message_paddingBottom"
             android:paddingTop="@dimen/d_welcome_message_paddingTop"
             android:text="@string/welcome_message"
@@ -44,7 +44,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/d_view"
-                android:background="@color/dark_gray" />
+                android:background="@color/silver" />
 
             <TextView
                 android:id="@+id/tv_country"
@@ -66,7 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/d_view"
                 android:layout_below="@id/tv_country"
-                android:background="@color/dark_gray" />
+                android:background="@color/silver" />
 
             <TextView
                 android:id="@+id/tv_phone_number"
@@ -88,6 +88,8 @@
                 android:gravity="end"
                 android:hint="@string/required"
                 android:inputType="phone"
+                android:digits="0123456789"
+                android:imeOptions="actionDone"
                 android:maxLength="10"
                 android:padding="@dimen/d_ll_country_padding" />
 
@@ -96,7 +98,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/d_view"
-            android:background="@color/dark_gray" />
+            android:background="@color/silver" />
 
         <Button
             android:id="@+id/b_verify"
@@ -106,7 +108,9 @@
             android:background="@drawable/shape_button_round"
             android:text="@string/verify_phone_number_button"
             android:textAllCaps="false"
-            android:textColor="@color/white" />
+            android:padding="@dimen/d_sign_up_verify_button_padding"
+            android:textColor="@color/white"
+            android:textSize="@dimen/s_sign_up_verify_button_text" />
 
         <TextView
             android:id="@+id/tv_terms"
@@ -116,28 +120,49 @@
             android:text="@string/terms_of_services"
             android:textSize="@dimen/s_terms_of_services" />
 
+        <ProgressBar
+            android:id="@+id/pb_progressbar"
+            android:layout_width="@dimen/d_signup_progress_bar_size"
+            android:layout_height="@dimen/d_signup_progress_bar_size"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/b_sign_up_facebook"
+        <FrameLayout
+            android:id="@+id/f_sign_up_facebook"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/d_sign_up_padding"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/d_sign_up_padding"
+            android:layout_marginEnd="@dimen/d_sign_up_padding"
+            android:layout_marginBottom="@dimen/d_welcome_marginTop"
             android:background="@drawable/shape_button_facebook"
-            android:text="@string/sig_up_with_facebook"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:layout_alignParentBottom="true"/>
+            android:padding="@dimen/d_contact_profile_name_padding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawablePadding="@dimen/d_fb_signup_drawable_padding"
+                android:drawableStart="@drawable/facebook"
+                android:gravity="center"
+                android:text="@string/sig_up_with_facebook"
+                android:textColor="@color/white"
+                android:textSize="@dimen/s_create_profile_size" />
+        </FrameLayout>
+
         <View
+            android:id="@+id/v_bottom_line"
             android:layout_width="match_parent"
             android:layout_height="@dimen/d_view"
-            android:background="@color/dark_gray"
-            android:layout_above="@id/b_sign_up_facebook"/>
-
+            android:layout_above="@id/f_sign_up_facebook"
+            android:background="@color/silver"
+            android:layout_marginBottom="@dimen/d_welcome_marginTop"/>
 
     </RelativeLayout>
 

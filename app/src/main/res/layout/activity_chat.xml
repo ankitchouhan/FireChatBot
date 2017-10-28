@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_chat_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_toolbar" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_chat_message"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="@dimen/d_row_contact_text_marginTop"
+        android:orientation="horizontal"
+        android:padding="@dimen/d_row_contact_text_marginTop">
+
+        <ImageView
+            android:id="@+id/iv_smile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/d_message_area_smile_padding"
+            android:src="@drawable/ic_smile_purple" />
+
+        <EditText
+            android:id="@+id/et_message_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape_message"
+            android:focusableInTouchMode="true"
+            android:maxLines="3"
+            android:padding="@dimen/d_message_area_edittext_padding" />
+
+        <ImageView
+            android:id="@+id/iv_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/d_message_area_smile_padding"
+            android:src="@drawable/ic_camera_purple"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/iv_separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d_chat_activity_separator_marginTop"
+            android:padding="@dimen/d_message_area_smile_padding"
+            android:src="@drawable/ic_verticaldots_grey"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/iv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/d_message_area_location_padding"
+            android:src="@drawable/ic_usermessage_location"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/d_message_area_smile_padding"
+            android:layout_marginEnd="@dimen/d_row_contact_text_marginTop"
+            android:layout_marginStart="@dimen/d_message_area_smile_padding"
+            android:background="@drawable/shape_button_round"
+            android:paddingBottom="@dimen/d_chat_activity_send_paddingTop"
+            android:paddingEnd="@dimen/d_chat_activity_send_paddingStart"
+            android:paddingStart="@dimen/d_chat_activity_send_paddingStart"
+            android:paddingTop="@dimen/d_chat_activity_send_paddingTop"
+            android:text="@string/send"
+            android:textColor="@color/white"
+            android:textSize="@dimen/s_create_profile_size"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d_300dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:id="@+id/ll_bottom_gallery">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+</LinearLayout>

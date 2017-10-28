@@ -1,8 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d_toolbar_height">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-</android.support.v7.widget.Toolbar>
+            <TextView
+                android:id="@+id/tv_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/black"
+                android:paddingTop="@dimen/d_toolbar_heading_padding"
+                android:paddingBottom="@dimen/d_toolbar_heading_padding_bottom"
+                android:textSize="@dimen/s_toolbar_heading_size"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_status_last_seen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textAllCaps="true"
+                android:textSize="@dimen/s_toolbar_status_size"
+                android:layout_below="@id/tv_heading"/>
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_otp_back"
+                android:visibility="gone"
+                android:padding="@dimen/d_toolbar_back_padding"/>
+
+            <ImageView
+                android:id="@+id/iv_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/d_contact_profile_name_padding"
+                android:src="@drawable/ic_usermessage_phone"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/d_contact_profile_name_padding"
+                android:src="@drawable/ic_chat_edit"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_add"
+                android:layout_width="@dimen/d_toolbar_add_size"
+                android:layout_height="@dimen/d_toolbar_add_size"
+                android:src="@drawable/ic_add"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:visibility="gone"
+                android:layout_marginEnd="@dimen/d_contact_profile_name_padding" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d_view"
+        android:background="@color/send" />
+</LinearLayout>

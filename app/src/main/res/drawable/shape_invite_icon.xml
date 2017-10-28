@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <size android:width="@dimen/d_signup_progress_bar_size"
+        android:height="@dimen/d_signup_progress_bar_size"/>
+    <stroke android:color="@color/purple" android:width="@dimen/d_row_contact_text_marginTop"/>
+
+</shape>

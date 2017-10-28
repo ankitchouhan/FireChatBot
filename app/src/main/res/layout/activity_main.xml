@@ -5,17 +5,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <android.support.design.widget.TabLayout
         android:id="@+id/tl_tabs"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/dark_gray"
+        android:layout_height="@dimen/d_tab_layout_height"
+        android:background="@color/light_gray"
         app:tabGravity="fill"
         app:tabTextAppearance="@style/Base.TextAppearance.AppCompat.Small"
-        app:tabIndicatorColor="@color/dark_gray"
+        app:tabIndicatorColor="@color/light_gray"
+        app:tabSelectedTextColor="@color/purple"
         app:tabMode="fixed"
         android:layout_alignParentBottom="true"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d_view"
+        android:background="@color/silver"
+        android:layout_above="@id/tl_tabs"
+        android:foregroundGravity="center_horizontal"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_pages"
@@ -23,8 +29,7 @@
         android:layout_height="match_parent"
         android:layout_above="@id/tl_tabs"/>
 
-    <!--
-        <Button
+   <!--     <Button
             android:id="@+id/b_sign_out"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

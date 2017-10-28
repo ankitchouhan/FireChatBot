@@ -3,6 +3,6 @@
     android:shape="rectangle">
 
     <corners android:radius="@dimen/d_country_spinner_marginTop"/>
-    <solid android:color="@color/facebook_button"/>
+    <solid android:color="@color/facebook_button" />
 
 </shape>

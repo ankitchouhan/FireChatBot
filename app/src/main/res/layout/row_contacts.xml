@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/d_welcome_marginTop"
+    android:layout_marginStart="@dimen/d_contact_list_padding">
+
+
+    <TextView
+        android:id="@+id/tv_invite_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:text="@string/invite_contact"
+        android:background="@drawable/shape_button_round"
+        android:textColor="@color/white"
+        android:layout_margin="@dimen/d_row_contact_invite_margin"
+        android:paddingStart="@dimen/d_row_contact_invite_paddingStart"
+        android:paddingEnd="@dimen/d_row_contact_invite_paddingStart"
+        android:paddingTop="@dimen/d_row_contact_invite_paddingTop"
+        android:paddingBottom="@dimen/d_row_contact_invite_paddingTop"/>
+
+    <TextView
+        android:id="@+id/tv_contact_icon"
+        android:layout_width="@dimen/d_profile_icon_size"
+        android:layout_height="@dimen/d_profile_icon_size"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/s_contact_profile_name_size"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:background="@drawable/shape_contact_icon"/>
+
+    <TextView
+        android:id="@+id/tv_contact_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/tv_contact_icon"
+        android:text="@string/add_friends"
+        android:textColor="@color/black"
+        android:textSize="@dimen/s_row_contact_invite_contact_name_text"
+        android:layout_marginStart="@dimen/d_row_contact_marginStart"
+        android:layout_toStartOf="@id/tv_invite_contact"
+        android:layout_marginEnd="@dimen/d_ll_country_padding"
+        android:maxLines="1"/>
+    <TextView
+        android:id="@+id/tv_contact_last_seen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/tv_contact_icon"
+        android:layout_below="@id/tv_contact_name"
+        android:layout_marginStart="@dimen/d_row_contact_marginStart"
+        android:layout_toStartOf="@id/tv_invite_contact"
+        android:layout_marginEnd="@dimen/d_ll_country_padding"
+        android:layout_marginTop="@dimen/d_message_area_location_padding"
+        android:text="@string/add_friends"
+        android:textSize="@dimen/s_row_contact_invite_contact_number_text"/>
+
+
+</RelativeLayout>

@@ -1,8 +1,128 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.firechatbot.fragments.ContactsFragment">
+    android:orientation="vertical"
+    android:id="@+id/ll_contact_fragment">
 
 
-</FrameLayout>
+    <include
+        layout="@layout/include_toolbar"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/search_view_height"
+        android:background="@color/send"
+        android:padding="@dimen/search_frame_padding">
+
+       <!-- <android.support.v7.widget.SearchView
+            android:id="@+id/sv_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:queryBackground="@null"
+            android:background="@drawable/shape_search_view" />-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rl_search_parent"
+            android:clickable="true"
+            android:background="@drawable/shape_search_view">
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:inputType="text"
+                android:maxLines="1"
+                android:background="@null"
+                android:maxLength="30"
+                android:hint="@string/search_hint"
+                android:textSize="@dimen/s_search_text_size"
+                android:imeOptions="actionDone"/>
+            <ImageView
+                android:id="@+id/iv_search_icon"
+                android:layout_width="@dimen/search_icon_size"
+                android:layout_height="@dimen/search_icon_size"
+                android:layout_toStartOf="@id/et_search"
+                android:src="@drawable/ic_countrycode_search"
+                android:layout_alignTop="@id/et_search"
+                android:layout_marginEnd="@dimen/search_icon_marginEnd"
+                android:layout_marginTop="@dimen/search_icon_marginTop"/>
+        </RelativeLayout>
+
+    </FrameLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nsv_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/d_contact_profile_name_padding">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_fragment_profile_icon"
+                    android:layout_width="@dimen/d_contact_profile_size"
+                    android:layout_height="@dimen/d_contact_profile_size"
+                    android:layout_marginBottom="@dimen/d_verify_button_marginTop"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/s_welcome_size"
+                    android:textStyle="bold"
+                    android:background="@drawable/shape_contact_icon"
+                    android:layout_marginStart="@dimen/d_contact_list_padding" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/tv_fragment_profile_icon"
+                    android:maxLength="25"
+                    android:layout_marginStart="@dimen/d_contact_list_padding"
+                    android:layout_marginTop="@dimen/d_contact_list_padding"
+                    android:text="@string/add_friends"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/s_toolbar_heading_size" />
+
+                <TextView
+                    android:id="@+id/tv_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_name"
+                    android:layout_marginStart="@dimen/d_contact_list_padding"
+                    android:layout_marginTop="@dimen/d_fb_signup_drawable_padding"
+                    android:layout_toEndOf="@id/tv_fragment_profile_icon"
+                    android:maxLength="20"
+                    android:text="@string/add_friends"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/s_contact_profile_name_size" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d_contact_fragment_text_height"
+                android:background="@color/light_gray"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/d_verify_button_marginTop"
+                android:text="@string/contacts"
+                android:textColor="@color/black"
+                android:textSize="@dimen/s_contact_profile_name_size" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_contacts"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="@dimen/s_contact_profile_name_size"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>
+

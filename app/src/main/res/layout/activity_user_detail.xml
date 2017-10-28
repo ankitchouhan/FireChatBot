@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_user_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <include layout="@layout/include_toolbar" />
@@ -16,14 +17,29 @@
         android:text="@string/create_your_profile"
         android:textSize="@dimen/s_create_profile_size" />
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/sdv_profile_image"
-        android:layout_width="@dimen/d_profile_image_size"
-        android:layout_height="@dimen/d_profile_image_size"
-        android:layout_gravity="center_horizontal"
-        app:roundAsCircle="true"
-        app:placeholderImage="@mipmap/ic_launcher_round"
-        android:layout_marginTop="@dimen/d_welcome_message_paddingTop" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_profile_image"
+            android:layout_width="@dimen/d_profile_image_size"
+            android:layout_height="@dimen/d_profile_image_size"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/d_welcome_message_paddingTop"
+            app:placeholderImage="@drawable/ic_profile_avatar"
+            app:roundAsCircle="true" />
+
+        <ImageView
+            android:id="@+id/iv_profile_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/sdv_profile_image"
+            android:layout_marginTop="@dimen/d_contact_profile_name_padding"
+            android:src="@drawable/ic_signup_edit" />
+    </RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,9 +55,9 @@
                 android:id="@+id/et_first_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/first_name"
-                android:textColor="@color/black"
-                android:textSize="@dimen/s_welcome_message_size" />
+                style="@style/UserDetailEditTextTheme"
+                android:imeOptions="actionNext"
+                android:hint="@string/first_name"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -52,9 +68,9 @@
                 android:id="@+id/et_last_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/last_name"
-                android:textColor="@color/black"
-                android:textSize="@dimen/s_welcome_message_size" />
+                style="@style/UserDetailEditTextTheme"
+                android:imeOptions="actionDone|actionGo"
+                android:hint="@string/last_name"/>
         </android.support.design.widget.TextInputLayout>
 
         <Button
@@ -65,15 +81,16 @@
             android:background="@drawable/shape_button_round"
             android:text="@string/button_done"
             android:textAllCaps="false"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/s_verify_size" />
 
         <ProgressBar
             android:id="@+id/pb_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="gone"
-            android:paddingTop="@dimen/d_verify_button_marginTop"/>
+            android:paddingTop="@dimen/d_verify_button_marginTop"
+            android:visibility="gone" />
 
     </LinearLayout>
 

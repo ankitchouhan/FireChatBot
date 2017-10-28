@@ -2,12 +2,13 @@
 <resources>
 
     <dimen name="d_sign_up_padding">30dp</dimen>
+    <dimen name="d_fb_signup_drawable_padding">5dp</dimen>
     <dimen name="d_welcome_marginTop">20dp</dimen>
-    <dimen name="s_welcome_size">30sp</dimen>
+    <dimen name="s_welcome_size">28sp</dimen>
     <dimen name="s_welcome_message_size">17sp</dimen>
     <dimen name="s_verify_size">17sp</dimen>
-    <dimen name="d_welcome_message_paddingTop">40dp</dimen>
-    <dimen name="d_welcome_message_paddingBottom">40dp</dimen>
+    <dimen name="d_welcome_message_paddingTop">30dp</dimen>
+    <dimen name="d_welcome_message_paddingBottom">30dp</dimen>
     <dimen name="d_view">1dp</dimen>
     <dimen name="d_ll_country_padding">8dp</dimen>
     <dimen name="d_country_spinner_marginTop">7dp</dimen>
@@ -15,8 +16,88 @@
     <dimen name="s_terms_of_services">13sp</dimen>
     <dimen name="d_spinner_width">150dp</dimen>
     <dimen name="s_create_profile_size">15sp</dimen>
-    <dimen name="d_profile_image_size">120dp</dimen>
+    <dimen name="d_profile_image_size">140dp</dimen>
+    <dimen name="d_sign_up_verify_button_padding">18dp</dimen>
+    <dimen name="s_sign_up_verify_button_text">16sp</dimen>
+    <dimen name="d_profile_icon_size">50dp</dimen>
+    
+    <dimen name="d_contact_profile_size">90dp</dimen>
+    <dimen name="s_contact_profile_name_size">18sp</dimen>
+    <dimen name="d_contact_profile_name_padding">13dp</dimen>
 
+    <dimen name="d_contact_list_padding">15dp</dimen>
+    <dimen name="d_signup_progress_bar_size">40dp</dimen>
+    <dimen name="d_tab_layout_height">66dp</dimen>
+    <dimen name="d_contact_fragment_text_height">50dp</dimen>
+    <dimen name="d_search_size">60dp</dimen>
 
+    <dimen name="d_row_contact_text_marginTop">3dp</dimen>
+    <dimen name="d_invite_marginStart">19dp</dimen>
+    <dimen name="d_name_paddingTop">2dp</dimen>
+    <dimen name="d_row_contact_marginStart">14dp</dimen>
+
+    <dimen name="d_toolbar_height">70dp</dimen>
+    <dimen name="s_toolbar_heading_size">20sp</dimen>
+    <dimen name="d_toolbar_heading_padding">10dp</dimen>
+    <dimen name="d_toolbar_heading_padding_bottom">2dp</dimen>
+    <dimen name="s_toolbar_status_size">12sp</dimen>
+    <dimen name="d_toolbar_back_padding">10dp</dimen>
+    <dimen name="d_invite_image_marginStart">20dp</dimen>
+
+    <dimen name="row_chat_name_marginStart">12dp</dimen>
+    <dimen name="d_message_area_edittext_padding">10dp</dimen>
+    <dimen name="d_message_area_smile_padding">7dp</dimen>
+    <dimen name="d_message_area_location_padding">4dp</dimen>
+
+    <dimen name="d_row_contact_invite_margin">7dp</dimen>
+    <dimen name="d_row_contact_invite_paddingStart">16dp</dimen>
+    <dimen name="d_row_contact_invite_paddingTop">8dp</dimen>
+    <dimen name="s_row_contact_invite_contact_name_text">17sp</dimen>
+    <dimen name="s_row_contact_invite_contact_number_text">15sp</dimen>
+
+    <dimen name="d_chat_activity_send_paddingStart">12dp</dimen>
+    <dimen name="d_chat_activity_send_paddingTop">7dp</dimen>
+    <dimen name="d_chat_activity_separator_marginTop">3dp</dimen>
+
+    <dimen name="setting_icon_size">300dp</dimen>
+
+    <dimen name="d_toolbar_add_size">40dp</dimen>
+    <dimen name="search_view_height">50dp</dimen>
+    <dimen name="search_frame_padding">11dp</dimen>
+    <dimen name="search_icon_size">12dp</dimen>
+    <dimen name="search_icon_marginTop">7dp</dimen>
+    <dimen name="search_icon_marginEnd">9dp</dimen>
+    <dimen name="s_search_text_size">17sp</dimen>
+
+    <dimen name="d_row_gallery_size">100dp</dimen>
+
+    <dimen name="d_dialog_layout_padding">28dp</dimen>
+    <dimen name="d_dialog_layout_marginStart">30dp</dimen>
+    <dimen name="s_dialog_share_location_size">22sp</dimen>
+    <dimen name="d_dialog_share_padding">27dp</dimen>
+    <dimen name="d_dialog_share_status_padding">10dp</dimen>
+    <dimen name="s_dialog_share_status_size">17sp</dimen>
+    <dimen name="s_dialog_yes_size">20sp</dimen>
+    <dimen name="d_dialog_yes_padding">17dp</dimen>
+    <dimen name="d_dialog_background">10dp</dimen>
+    <dimen name="d_200dp">200dp</dimen>
+    <dimen name="s_message_size">18sp</dimen>
+    <dimen name="d_message_padding">15dp</dimen>
+    <dimen name="d_message_sender_padding">8dp</dimen>
+    <dimen name="s_message_timestamp_size">14sp</dimen>
+    <dimen name="d_message_timestamp_padding">8dp</dimen>
+    <dimen name="d_300dp">250dp</dimen>
+
+    <dimen name="d_row_chat_view_marginTop">8dp</dimen>
+    <dimen name="d_row_chat_view_marginStart">81dp</dimen>
+
+    <dimen name="d_row_chat_last_message_marginStart">60dp</dimen>
+    <dimen name="d_row_chat_last_message_paddingTop">5dp</dimen>
+    <dimen name="d_row_chat_last_message_marginEnd">10dp</dimen>
+    <dimen name="d_row_gallery_marginTop">8dp</dimen>
+    <dimen name="d_row_receiver_message_image_size">250dp</dimen>
+    <dimen name="d_row_receiver_message_image_marginTop">8dp</dimen>
+
+    <dimen name="drawee_hierarchy_progress_radius">10dp</dimen>
 
 </resources>
